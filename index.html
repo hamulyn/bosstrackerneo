@@ -1,0 +1,704 @@
+import React, { useState, useEffect } from 'react';
+import { Bell, BellOff, Clock, MapPin, Settings } from 'lucide-react';
+
+const BossTracker = () => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState('today');
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [notificationMinutes, setNotificationMinutes] = useState(5);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [notifiedBosses, setNotifiedBosses] = useState({});
+
+  // Get GMT-6 time
+  const getServerTime = () => {
+    const utc = new Date(currentTime.toLocaleString("en-US", { timeZone: "UTC" }));
+    const gmt6 = new Date(utc.getTime() - (6 * 60 * 60 * 1000));
+    return gmt6;
+  };
+
+  const bossData = {
+    1: [ // Monday
+      { time: '0:00', boss: 'Primeval', color: '#3fb950' },
+      { time: '1:22', boss: 'Primeval', color: '#3fb950' },
+      { time: '2:37', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '3:55', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '4:30', boss: 'Primeval', color: '#3fb950' },
+      { time: '5:57', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '6:30', boss: 'Primeval', color: '#3fb950' },
+      { time: '7:49', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '9:13', boss: 'Primeval', color: '#3fb950' },
+      { time: '10:56', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '12:09', boss: 'Primeval', color: '#3fb950' },
+      { time: '13:43', boss: 'Primeval', color: '#3fb950' },
+      { time: '14:38', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '15:26', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '16:34', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '17:09', boss: 'Primeval', color: '#3fb950' },
+      { time: '18:39', boss: 'Primeval', color: '#3fb950' },
+      { time: '20:08', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '20:31', boss: 'Primeval', color: '#3fb950' },
+      { time: '21:49', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '21:49', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '23:05', boss: 'Primeval', color: '#3fb950' },
+      { time: '23:09', boss: 'Frostscale', color: '#58a6ff' }
+    ],
+    2: [ // Tuesday
+      { time: '0:00', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '1:16', boss: 'Primeval', color: '#3fb950' },
+      { time: '2:39', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '3:02', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '4:18', boss: 'Primeval', color: '#3fb950' },
+      { time: '5:57', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '6:48', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '7:22', boss: 'Primeval', color: '#3fb950' },
+      { time: '8:42', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '10:16', boss: 'Primeval', color: '#3fb950' },
+      { time: '11:42', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '13:20', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '14:38', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '15:56', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '16:34', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '17:34', boss: 'Primeval', color: '#3fb950' },
+      { time: '19:05', boss: 'Primeval', color: '#3fb950' },
+      { time: '20:51', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '21:49', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '23:09', boss: 'Frostscale', color: '#58a6ff' }
+    ],
+    3: [ // Wednesday
+      { time: '0:00', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '1:36', boss: 'Primeval', color: '#3fb950' },
+      { time: '3:02', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '4:30', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '5:57', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '6:08', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '7:48', boss: 'Primeval', color: '#3fb950' },
+      { time: '9:26', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '10:44', boss: 'Primeval', color: '#3fb950' },
+      { time: '12:11', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '13:29', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '14:57', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '15:57', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '16:40', boss: 'Primeval', color: '#3fb950' },
+      { time: '18:03', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '19:42', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '20:31', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '21:22', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '22:37', boss: 'Primeval', color: '#3fb950' }
+    ],
+    4: [ // Thursday
+      { time: '0:08', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '1:25', boss: 'Primeval', color: '#3fb950' },
+      { time: '2:44', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '3:08', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '4:26', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '5:53', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '7:17', boss: 'Primeval', color: '#3fb950' },
+      { time: '8:52', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '10:07', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '11:44', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '13:14', boss: 'Primeval', color: '#3fb950' },
+      { time: '14:57', boss: 'Primeval', color: '#3fb950' },
+      { time: '16:22', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '16:53', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '17:53', boss: 'Primeval', color: '#3fb950' },
+      { time: '19:19', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '20:40', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '21:56', boss: 'Primeval', color: '#3fb950' },
+      { time: '23:25', boss: 'Primeval', color: '#3fb950' }
+    ],
+    5: [ // Friday
+      { time: '0:00', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '1:44', boss: 'Primeval', color: '#3fb950' },
+      { time: '3:06', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '4:38', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '6:10', boss: 'Primeval', color: '#3fb950' },
+      { time: '7:52', boss: 'Primeval', color: '#3fb950' },
+      { time: '9:23', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '10:42', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '12:09', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '13:36', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '14:57', boss: 'Primeval', color: '#3fb950' },
+      { time: '16:23', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '17:57', boss: 'Primeval', color: '#3fb950' },
+      { time: '19:57', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '20:59', boss: 'Primeval', color: '#3fb950' },
+      { time: '22:19', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '23:50', boss: 'Primeval', color: '#3fb950' },
+      { time: '23:50', boss: 'Skypetal', color: '#f59e0b' }
+    ],
+    6: [ // Saturday
+      { time: '0:52', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '2:30', boss: 'Primeval', color: '#3fb950' },
+      { time: '3:52', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '5:28', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '6:51', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '8:11', boss: 'Primeval', color: '#3fb950' },
+      { time: '9:56', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '11:36', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '12:54', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '14:24', boss: 'Primeval', color: '#3fb950' },
+      { time: '16:01', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '17:25', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '19:01', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '20:46', boss: 'Primeval', color: '#3fb950' },
+      { time: '22:27', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '23:57', boss: 'Primeval', color: '#3fb950' }
+    ],
+    0: [ // Sunday
+      { time: '1:15', boss: 'Primeval', color: '#3fb950' },
+      { time: '2:30', boss: 'Primeval', color: '#3fb950' },
+      { time: '4:06', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '5:34', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '7:06', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '8:47', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '10:23', boss: 'Primeval', color: '#3fb950' },
+      { time: '11:55', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '13:18', boss: 'Primeval', color: '#3fb950' },
+      { time: '14:37', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '16:00', boss: 'Skypetal', color: '#f59e0b' },
+      { time: '17:44', boss: 'Primeval', color: '#3fb950' },
+      { time: '19:10', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '20:44', boss: 'Primeval', color: '#3fb950' },
+      { time: '21:56', boss: 'Frostscale', color: '#58a6ff' },
+      { time: '22:23', boss: 'Skypetal', color: '#f59e0b' }
+    ]
+  };
+
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (notificationsEnabled && 'Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, [notificationsEnabled]);
+
+  const parseTime = (timeStr, dayOffset = 0) => {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const serverNow = getServerTime();
+    const date = new Date(serverNow);
+    date.setHours(hours, minutes, 0, 0);
+    date.setDate(date.getDate() + dayOffset);
+    return date;
+  };
+
+  const getTimeUntilSpawn = (spawnTime, dayIndex) => {
+    const serverNow = getServerTime();
+    const currentDay = serverNow.getDay();
+    let dayDiff = dayIndex - currentDay;
+    if (dayDiff < 0) dayDiff += 7;
+    
+    const spawn = parseTime(spawnTime, dayDiff);
+    const diff = spawn - serverNow;
+    
+    if (diff < 0 && dayDiff === 0) {
+      return parseTime(spawnTime, 7) - serverNow;
+    }
+    
+    return diff;
+  };
+
+  const formatCountdown = (ms) => {
+    if (ms <= 0) return 'Spawned';
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+
+  const showNotification = (boss, time) => {
+    if (!notificationsEnabled || Notification.permission !== 'granted') return;
+    
+    const notifKey = `${boss.boss}_${time}_${notificationMinutes}`;
+    if (notifiedBosses[notifKey]) return;
+    
+    new Notification('Boss Spawn Alert', {
+      body: `${boss.boss} will spawn in ${notificationMinutes} minutes at ${time}!`,
+      icon: '🎮'
+    });
+    
+    setNotifiedBosses(prev => ({ ...prev, [notifKey]: true }));
+  };
+
+  const checkNotifications = () => {
+    if (!notificationsEnabled) return;
+    
+    Object.keys(bossData).forEach(dayKey => {
+      bossData[dayKey].forEach(boss => {
+        const msUntil = getTimeUntilSpawn(boss.time, parseInt(dayKey));
+        const minutesUntil = Math.floor(msUntil / 60000);
+        
+        if (minutesUntil === notificationMinutes) {
+          showNotification(boss, boss.time);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    checkNotifications();
+  }, [currentTime, notificationsEnabled, notificationMinutes]);
+
+  const getBossesToDisplay = () => {
+    const serverNow = getServerTime();
+    const currentDay = serverNow.getDay();
+    const dayToShow = selectedDay === 'today' ? currentDay : parseInt(selectedDay);
+    
+    const bosses = bossData[dayToShow].map(boss => {
+      const timeUntil = getTimeUntilSpawn(boss.time, dayToShow);
+      const localSpawnTime = new Date(Date.now() + timeUntil);
+      
+      return {
+        ...boss,
+        dayIndex: dayToShow,
+        timeUntil: timeUntil,
+        countdown: formatCountdown(timeUntil),
+        localSpawnTime: localSpawnTime
+      };
+    });
+    
+    // Filter out bosses that spawn more than 24 hours away ONLY for "Today" tab
+    if (selectedDay === 'today') {
+      const filtered = bosses.filter(boss => boss.timeUntil <= 24 * 60 * 60 * 1000);
+      return filtered.sort((a, b) => a.timeUntil - b.timeUntil);
+    }
+    
+    return bosses.sort((a, b) => a.timeUntil - b.timeUntil);
+  };
+
+  const getUserTimezone = () => {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  };
+
+  const testNotification = () => {
+    if (Notification.permission === 'granted') {
+      new Notification('Boss Tracker Test', {
+        body: 'Notifications are working correctly!',
+        icon: '🎮'
+      });
+    } else {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          testNotification();
+        }
+      });
+    }
+  };
+
+  return (
+    <div style={{
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", sans-serif',
+      background: '#0d1117',
+      color: '#c9d1d9',
+      minHeight: '100vh',
+      padding: '2rem'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <h1 style={{
+          textAlign: 'center',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          marginBottom: '3rem',
+          fontSize: '2.5rem'
+        }}>
+          Boss Spawn Tracker
+        </h1>
+
+        {/* Overview Card */}
+        <div style={{
+          background: '#161b22',
+          border: '1px solid #30363d',
+          borderRadius: '12px',
+          padding: '2rem',
+          marginBottom: '2rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)'
+        }}>
+          <h3 style={{
+            marginTop: 0,
+            marginBottom: '1.5rem',
+            color: '#58a6ff',
+            borderLeft: '3px solid #58a6ff',
+            paddingLeft: '1rem',
+            fontSize: '1.5rem'
+          }}>
+            Overview
+          </h3>
+          <p style={{ color: '#8b949e', marginBottom: '1rem' }}>
+            Track boss spawn times across all days of the week. This tracker monitors three boss types: <span style={{ color: '#3fb950', fontWeight: 'bold' }}>Primeval</span>, <span style={{ color: '#58a6ff', fontWeight: 'bold' }}>Frostscale</span>, and <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>Skypetal</span>.
+          </p>
+          <p style={{ color: '#8b949e', marginBottom: '1rem' }}>
+            Server times are displayed in GMT-6. Your local timezone is <span style={{ color: '#58a6ff', fontWeight: 'bold' }}>{getUserTimezone()}</span>.
+          </p>
+
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '1rem',
+            marginTop: '1.5rem',
+            background: '#21262d',
+            padding: '1rem',
+            borderRadius: '8px'
+          }}>
+            <Clock style={{ width: '24px', height: '24px', color: '#58a6ff' }} />
+            <span style={{ fontSize: '1.2rem', fontFamily: 'monospace', color: '#58a6ff', fontWeight: 'bold' }}>
+              Server Time: {getServerTime().toLocaleTimeString('en-US', { hour12: false })}
+            </span>
+          </div>
+        </div>
+
+        {/* Day Filter Card */}
+        <div style={{
+          background: '#161b22',
+          border: '1px solid #30363d',
+          borderRadius: '12px',
+          padding: '1.5rem',
+          marginBottom: '2rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.5rem',
+            justifyContent: 'center'
+          }}>
+            <button
+              onClick={() => setSelectedDay('today')}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                border: '1px solid #30363d',
+                background: selectedDay === 'today' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#21262d',
+                color: '#c9d1d9',
+                fontWeight: selectedDay === 'today' ? 'bold' : 'normal',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontSize: '0.95rem'
+              }}
+            >
+              Today
+            </button>
+            {dayNames.map((day, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedDay(String(index))}
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  border: '1px solid #30363d',
+                  background: selectedDay === String(index) ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#21262d',
+                  color: '#c9d1d9',
+                  fontWeight: selectedDay === String(index) ? 'bold' : 'normal',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontSize: '0.95rem'
+                }}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Boss Schedule Card */}
+        <div style={{
+          background: '#161b22',
+          border: '1px solid #30363d',
+          borderRadius: '12px',
+          padding: '2rem',
+          marginBottom: '2rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)'
+        }}>
+          <h3 style={{
+            marginTop: 0,
+            marginBottom: '1.5rem',
+            color: '#58a6ff',
+            borderLeft: '3px solid #58a6ff',
+            paddingLeft: '1rem',
+            fontSize: '1.5rem'
+          }}>
+            Boss Schedule
+          </h3>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              background: '#21262d',
+              borderRadius: '8px',
+              overflow: 'hidden'
+            }}>
+              <thead style={{ background: '#30363d' }}>
+                <tr>
+                  <th style={{
+                    padding: '0.75rem',
+                    textAlign: 'left',
+                    fontSize: '0.8rem',
+                    color: '#58a6ff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    borderBottom: '1px solid #30363d'
+                  }}>
+                    <MapPin style={{ display: 'inline', width: '14px', height: '14px', marginRight: '0.5rem' }} />
+                    Boss Location
+                  </th>
+                  <th style={{
+                    padding: '0.75rem',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    color: '#58a6ff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    borderBottom: '1px solid #30363d'
+                  }}>
+                    Time Until Spawn
+                  </th>
+                  <th style={{
+                    padding: '0.75rem',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    color: '#58a6ff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    borderBottom: '1px solid #30363d'
+                  }}>
+                    Server Time
+                  </th>
+                  <th style={{
+                    padding: '0.75rem',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    color: '#58a6ff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    borderBottom: '1px solid #30363d'
+                  }}>
+                    Next Spawn (Your Time)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {getBossesToDisplay().map((boss, index) => (
+                  <tr key={index} style={{
+                    borderBottom: '1px solid #30363d',
+                    transition: 'background 0.2s'
+                  }}>
+                    <td style={{
+                      padding: '1rem 0.75rem',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      <span style={{
+                        fontWeight: 'bold',
+                        fontSize: '1.1rem',
+                        color: boss.color
+                      }}>
+                        {boss.boss}
+                      </span>
+                    </td>
+                    <td style={{
+                      padding: '1rem 0.75rem',
+                      whiteSpace: 'nowrap',
+                      textAlign: 'center'
+                    }}>
+                      <span style={{
+                        fontFamily: 'monospace',
+                        fontSize: '1.1rem',
+                        fontWeight: 'bold',
+                        color: boss.timeUntil <= 0 ? '#f85149' : boss.color
+                      }}>
+                        {boss.countdown}
+                      </span>
+                    </td>
+                    <td style={{
+                      padding: '1rem 0.75rem',
+                      whiteSpace: 'nowrap',
+                      textAlign: 'center',
+                      fontFamily: 'monospace',
+                      color: '#8b949e'
+                    }}>
+                      {boss.time}
+                    </td>
+                    <td style={{
+                      padding: '1rem 0.75rem',
+                      whiteSpace: 'nowrap',
+                      textAlign: 'center',
+                      color: '#8b949e'
+                    }}>
+                      {boss.localSpawnTime.toLocaleString('en-US', { 
+                        weekday: 'short',
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Notification Settings Card */}
+        <div style={{
+          background: '#161b22',
+          border: '1px solid #30363d',
+          borderRadius: '12px',
+          padding: '2rem',
+          marginBottom: '2rem',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)'
+        }}>
+          <h3 style={{
+            marginTop: 0,
+            marginBottom: '1.5rem',
+            color: '#58a6ff',
+            borderLeft: '3px solid #58a6ff',
+            paddingLeft: '1rem',
+            fontSize: '1.5rem'
+          }}>
+            <Settings style={{ display: 'inline', width: '24px', height: '24px', marginRight: '0.5rem' }} />
+            Notification Settings
+          </h3>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              cursor: 'pointer',
+              color: '#c9d1d9'
+            }}>
+              <input
+                type="checkbox"
+                checked={notificationsEnabled}
+                onChange={(e) => setNotificationsEnabled(e.target.checked)}
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  accentColor: '#58a6ff',
+                  cursor: 'pointer'
+                }}
+              />
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                {notificationsEnabled ? (
+                  <Bell style={{ width: '20px', height: '20px', color: '#58a6ff' }} />
+                ) : (
+                  <BellOff style={{ width: '20px', height: '20px', color: '#8b949e' }} />
+                )}
+                Enable Notifications
+              </span>
+            </label>
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              flexWrap: 'wrap'
+            }}>
+              <label style={{ color: '#8b949e', whiteSpace: 'nowrap' }}>Alert me</label>
+              <select
+                value={notificationMinutes}
+                onChange={(e) => setNotificationMinutes(Number(e.target.value))}
+                style={{
+                  flex: '1',
+                  minWidth: '150px',
+                  background: '#21262d',
+                  border: '1px solid #30363d',
+                  borderRadius: '6px',
+                  padding: '0.5rem 0.75rem',
+                  color: '#c9d1d9',
+                  outline: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="5">5 minutes before</option>
+                <option value="10">10 minutes before</option>
+                <option value="15">15 minutes before</option>
+                <option value="20">20 minutes before</option>
+                <option value="30">30 minutes before</option>
+              </select>
+              <button
+                onClick={testNotification}
+                style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1.5rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  fontSize: '0.95rem'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              >
+                Test Notification
+              </button>
+            </div>
+
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              cursor: 'pointer',
+              color: '#c9d1d9'
+            }}>
+              <input
+                type="checkbox"
+                checked={soundEnabled}
+                onChange={(e) => setSoundEnabled(e.target.checked)}
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  accentColor: '#58a6ff',
+                  cursor: 'pointer'
+                }}
+              />
+              <span>Play Sound with Notification</span>
+            </label>
+
+            <div style={{
+              background: '#21262d',
+              border: '1px solid #30363d',
+              borderRadius: '8px',
+              padding: '1rem',
+              marginTop: '0.5rem'
+            }}>
+              <p style={{
+                margin: 0,
+                color: '#8b949e',
+                fontSize: '0.9rem',
+                lineHeight: '1.6'
+              }}>
+                <strong style={{ color: '#58a6ff' }}>Note:</strong> Browser notifications must be enabled for this feature to work. Click "Test Notification" to verify your settings. Notifications will alert you before each boss spawn based on your selected time interval.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div style={{
+          textAlign: 'center',
+          marginTop: '3rem',
+          color: '#8b949e',
+          fontSize: '0.875rem',
+          paddingBottom: '2rem'
+        }}>
+          <p>Boss Spawn Tracker | Real-time countdown and notifications</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BossTracker;
