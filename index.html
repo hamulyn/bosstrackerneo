@@ -1,114 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boss Spawn Tracker</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; padding: 2rem; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    h1 { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 3rem; font-size: 2.5rem; }
-    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
-    .card h3 { margin-top: 0; margin-bottom: 1.5rem; color: #58a6ff; border-left: 3px solid #58a6ff; padding-left: 1rem; font-size: 1.5rem; }
-    .card p { color: #8b949e; margin-bottom: 1rem; }
-    .server-time { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; background: #21262d; padding: 1rem; border-radius: 8px; }
-    .server-time span { font-size: 1.2rem; font-family: monospace; color: #58a6ff; font-weight: bold; }
-    .day-filter { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-    .day-btn { padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid #30363d; background: #21262d; color: #c9d1d9; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
-    .day-btn:hover { background: #30363d; }
-    .day-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-weight: bold; }
-    table { width: 100%; border-collapse: collapse; background: #21262d; border-radius: 8px; overflow: hidden; }
-    thead { background: #30363d; }
-    th { padding: 0.75rem; text-align: center; font-size: 0.8rem; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #30363d; }
-    th:first-child { text-align: left; }
-    td { padding: 1rem 0.75rem; white-space: nowrap; text-align: center; border-bottom: 1px solid #30363d; color: #8b949e; }
-    td:first-child { text-align: left; }
-    tbody tr:hover { background: rgba(48, 54, 61, 0.5); }
-    .boss-name { font-weight: bold; font-size: 1.1rem; }
-    .countdown { font-family: monospace; font-size: 1.1rem; font-weight: bold; }
-    .notification-settings { display: flex; flex-direction: column; gap: 1.5rem; }
-    .notification-option { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #c9d1d9; }
-    .notification-option input[type="checkbox"] { width: 20px; height: 20px; accent-color: #58a6ff; cursor: pointer; }
-    .notification-inline { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .notification-inline label { color: #8b949e; white-space: nowrap; }
-    .notification-inline select { flex: 1; min-width: 150px; background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.5rem 0.75rem; color: #c9d1d9; outline: none; cursor: pointer; }
-    .btn-test { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 6px; padding: 0.5rem 1.5rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; font-size: 0.95rem; }
-    .btn-test:hover { transform: translateY(-2px); }
-    .btn-save { background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%); color: #fff; border: none; border-radius: 6px; padding: 0.75rem 2rem; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 1rem; margin-top: 1rem; width: 100%; }
-    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(63, 185, 80, 0.4); }
-    .save-status { text-align: center; margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-weight: bold; opacity: 0; transition: opacity 0.3s; }
-    .save-status.show { opacity: 1; }
-    .save-status.success { background: rgba(63, 185, 80, 0.2); color: #3fb950; border: 1px solid #3fb950; }
-    .note-box { background: #21262d; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; margin-top: 0.5rem; }
-    .note-box p { margin: 0; color: #8b949e; font-size: 0.9rem; line-height: 1.6; }
-    .note-box strong { color: #58a6ff; }
-    .footer { text-align: center; margin-top: 3rem; color: #8b949e; font-size: 0.875rem; padding-bottom: 2rem; }
-    .highlight { font-weight: bold; }
-    .primeval { color: #3fb950; }
-    .frostscale { color: #58a6ff; }
-    .skypetal { color: #ff8c00; }
-    .golden { color: #ffd700; }
-    .spawned { color: #f85149; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boss & Quest Tracker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh;padding:2rem}.container{max-width:1200px;margin:0 auto}h1{text-align:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2rem;font-size:2.5rem}.nav-tabs{display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}.nav-tab{padding:1rem 2rem;border-radius:8px;background:#21262d;border:1px solid #30363d;color:#c9d1d9;cursor:pointer;transition:all .2s;font-size:1rem;font-weight:500}.nav-tab:hover{background:#30363d}.nav-tab.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-color:#667eea;font-weight:700}.tab-content{display:none}.tab-content.active{display:block}.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:2rem;margin-bottom:2rem;box-shadow:0 8px 24px rgba(0,0,0,.5)}.card h3{margin:0 0 1.5rem;color:#58a6ff;border-left:3px solid #58a6ff;padding-left:1rem;font-size:1.5rem}.card p{color:#8b949e;margin-bottom:1rem}.server-time{display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.5rem;background:#21262d;padding:1rem;border-radius:8px}.server-time span{font-size:1.2rem;font-family:monospace;color:#58a6ff;font-weight:700}.day-filter{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}.day-btn{padding:.5rem 1rem;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;transition:all .2s;font-size:.95rem}.day-btn:hover{background:#30363d}.day-btn.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-weight:700}table{width:100%;border-collapse:collapse;background:#21262d;border-radius:8px;overflow:hidden}thead{background:#30363d}th{padding:.75rem;text-align:center;font-size:.8rem;color:#58a6ff;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #30363d}th:first-child{text-align:left}td{padding:1rem .75rem;white-space:nowrap;text-align:center;border-bottom:1px solid #30363d;color:#8b949e}td:first-child{text-align:left}tbody tr:hover{background:rgba(48,54,61,.5)}.boss-name{font-weight:700;font-size:1.1rem}.countdown{font-family:monospace;font-size:1.1rem;font-weight:700}.notification-settings{display:flex;flex-direction:column;gap:1.5rem}.notification-option{display:flex;align-items:center;gap:.75rem;cursor:pointer;color:#c9d1d9}.notification-option input[type=checkbox]{width:20px;height:20px;accent-color:#58a6ff;cursor:pointer}.notification-inline{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}.notification-inline label{color:#8b949e;white-space:nowrap}.notification-inline select{flex:1;min-width:150px;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.5rem .75rem;color:#c9d1d9;outline:0;cursor:pointer}.btn-test{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:6px;padding:.5rem 1.5rem;font-weight:700;cursor:pointer;transition:transform .2s;font-size:.95rem}.btn-test:hover{transform:translateY(-2px)}.btn-save{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);color:#fff;border:none;border-radius:6px;padding:.75rem 2rem;font-weight:700;cursor:pointer;transition:all .2s;font-size:1rem;margin-top:1rem;width:100%}.btn-save:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(63,185,80,.4)}.save-status{text-align:center;margin-top:1rem;padding:.75rem;border-radius:6px;font-weight:700;opacity:0;transition:opacity .3s}.save-status.show{opacity:1}.save-status.success{background:rgba(63,185,80,.2);color:#3fb950;border:1px solid #3fb950}.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}.summary-card{background:#21262d;border:1px solid #30363d;border-radius:8px;padding:1.5rem;text-align:center}.summary-card h4{color:#8b949e;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;font-weight:500}.summary-card .value{font-size:2rem;font-weight:700;margin:.5rem 0}.summary-card .lost{color:#f85149}.summary-card .earned{color:#3fb950}.summary-card .total{color:#58a6ff}.summary-card .subtitle{color:#8b949e;font-size:.85rem;margin-top:.5rem}.quest-section{margin-bottom:2rem}.quest-section h4{color:#58a6ff;font-size:1.2rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #30363d}.quest-item{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:#21262d;border:1px solid #30363d;border-radius:8px;margin-bottom:.75rem;transition:all .2s;cursor:pointer}.quest-item:hover{background:rgba(48,54,61,.5)}.quest-item.completed{opacity:.5;background:rgba(63,185,80,.1)}.quest-left{display:flex;align-items:center;gap:1rem;flex:1}.quest-checkbox{width:22px;height:22px;accent-color:#58a6ff;cursor:pointer}.quest-name{font-weight:500;color:#c9d1d9;font-size:1rem}.quest-rewards{display:flex;gap:1.5rem;align-items:center}.reward-item{text-align:center}.reward-label{color:#8b949e;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.25rem}.reward-value{color:#ffd700;font-weight:700;font-size:1rem}.reward-value.xp{color:#3fb950}.button-group{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem}.btn{padding:.75rem 2rem;border-radius:6px;border:none;font-weight:700;cursor:pointer;transition:all .2s;font-size:.95rem}.btn-reset{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}.btn-reset:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,.4)}.btn-complete{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);color:#fff}.btn-complete:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(63,185,80,.4)}.progress-bar-container{background:#21262d;border-radius:8px;height:12px;overflow:hidden;margin-top:1rem}.progress-bar{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);height:100%;transition:width .3s ease}.note-box{background:#21262d;border:1px solid #30363d;border-radius:8px;padding:1rem;margin-top:.5rem}.note-box p{margin:0;color:#8b949e;font-size:.9rem;line-height:1.6}.note-box strong{color:#58a6ff}.footer{text-align:center;margin-top:3rem;color:#8b949e;font-size:.875rem;padding-bottom:2rem}.highlight{font-weight:700}.primeval{color:#3fb950}.frostscale{color:#58a6ff}.skypetal{color:#ff8c00}.golden{color:#ffd700}.spawned{color:#f85149}@media (max-width:768px){.quest-item{flex-direction:column;gap:1rem}.quest-rewards{width:100%;justify-content:space-around}.summary-grid{grid-template-columns:1fr}.nav-tab{padding:.75rem 1.5rem;font-size:.9rem}}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Boss Spawn Tracker</h1>
-    <div class="card">
-      <h3>Overview</h3>
-      <p>Track boss spawn times across all days of the week. This tracker monitors four boss types: <span class="primeval highlight">Primeval</span>, <span class="frostscale highlight">Frostscale</span>, <span class="skypetal highlight">Skypetal</span>, and <span class="golden highlight">Golden Boss Event</span>.</p>
-      <p>Server times are displayed in GMT-6. Your local timezone is <span class="frostscale highlight" id="userTimezone"></span>.</p>
-      <div class="server-time"><span>⏰</span><span id="serverClock">00:00:00</span></div>
-    </div>
-    <div class="card">
-      <div class="day-filter" id="dayFilter">
-        <button class="day-btn active" data-day="today">Today</button>
-        <button class="day-btn" data-day="0">Sunday</button>
-        <button class="day-btn" data-day="1">Monday</button>
-        <button class="day-btn" data-day="2">Tuesday</button>
-        <button class="day-btn" data-day="3">Wednesday</button>
-        <button class="day-btn" data-day="4">Thursday</button>
-        <button class="day-btn" data-day="5">Friday</button>
-        <button class="day-btn" data-day="6">Saturday</button>
-      </div>
-    </div>
-    <div class="card">
-      <h3>Boss Schedule</h3>
-      <div style="overflow-x: auto;"><table><thead><tr><th>📍 Boss Location</th><th>Time Until Spawn</th><th>Server Time</th><th>Next Spawn (Your Time)</th></tr></thead><tbody id="bossTable"></tbody></table></div>
-    </div>
-    <div class="card">
-      <h3>⚙️ Notification Settings</h3>
-      <div class="notification-settings">
-        <label class="notification-option"><input type="checkbox" id="enableNotifications"><span>🔔 Enable Notifications</span></label>
-        <div class="notification-inline"><label>Alert me</label><select id="notificationMinutes"><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="20">20 minutes before</option><option value="30">30 minutes before</option></select><button class="btn-test" id="testNotification">Test Notification</button></div>
-        <label class="notification-option"><input type="checkbox" id="soundEnabled"><span>🔊 Play Sound with Notification</span></label>
-        <div class="note-box"><p><strong>Note:</strong> Browser notifications must be enabled for this feature to work. Click "Test Notification" to verify your settings. Notifications will alert you before each boss spawn based on your selected time interval.</p></div>
-        <button class="btn-save" id="saveSettings">💾 Save Notification Settings</button>
-        <div class="save-status success" id="saveStatus">✓ Settings saved successfully!</div>
-      </div>
-    </div>
-    <div class="footer"><p>Boss Spawn Tracker | Real-time countdown and notifications</p></div>
-  </div>
-  <script>
-    const bossData={1:[{time:'0:00',boss:'Primeval',color:'primeval'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:22',boss:'Primeval',color:'primeval'},{time:'2:37',boss:'Skypetal',color:'skypetal'},{time:'3:55',boss:'Primeval',color:'primeval'},{time:'5:11',boss:'Frostscale',color:'frostscale'},{time:'6:30',boss:'Primeval',color:'primeval'},{time:'7:49',boss:'Skypetal',color:'skypetal'},{time:'9:13',boss:'Primeval',color:'primeval'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:36',boss:'Skypetal',color:'skypetal'},{time:'12:09',boss:'Primeval',color:'primeval'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:43',boss:'Frostscale',color:'frostscale'},{time:'15:26',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'17:09',boss:'Primeval',color:'primeval'},{time:'18:39',boss:'Primeval',color:'primeval'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'20:08',boss:'Skypetal',color:'skypetal'},{time:'21:49',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'23:05',boss:'Primeval',color:'primeval'}],2:[{time:'0:00',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:16',boss:'Primeval',color:'primeval'},{time:'2:39',boss:'Frostscale',color:'frostscale'},{time:'4:18',boss:'Skypetal',color:'skypetal'},{time:'5:57',boss:'Primeval',color:'primeval'},{time:'7:22',boss:'Primeval',color:'primeval'},{time:'8:42',boss:'Frostscale',color:'frostscale'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:16',boss:'Skypetal',color:'skypetal'},{time:'11:42',boss:'Frostscale',color:'frostscale'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:20',boss:'Skypetal',color:'skypetal'},{time:'14:38',boss:'Skypetal',color:'skypetal'},{time:'15:56',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'17:34',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:05',boss:'Skypetal',color:'skypetal'},{time:'20:31',boss:'Frostscale',color:'frostscale'},{time:'21:49',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'23:09',boss:'Frostscale',color:'frostscale'}],3:[{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:36',boss:'Primeval',color:'primeval'},{time:'3:02',boss:'Skypetal',color:'skypetal'},{time:'4:30',boss:'Skypetal',color:'skypetal'},{time:'6:08',boss:'Primeval',color:'primeval'},{time:'7:48',boss:'Primeval',color:'primeval'},{time:'9:26',boss:'Frostscale',color:'frostscale'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:44',boss:'Primeval',color:'primeval'},{time:'12:11',boss:'Primeval',color:'primeval'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:29',boss:'Frostscale',color:'frostscale'},{time:'14:57',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'16:40',boss:'Skypetal',color:'skypetal'},{time:'18:03',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:42',boss:'Skypetal',color:'skypetal'},{time:'21:22',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'22:37',boss:'Primeval',color:'primeval'}],4:[{time:'0:08',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:25',boss:'Primeval',color:'primeval'},{time:'3:08',boss:'Skypetal',color:'skypetal'},{time:'4:26',boss:'Skypetal',color:'skypetal'},{time:'5:53',boss:'Skypetal',color:'skypetal'},{time:'7:17',boss:'Skypetal',color:'skypetal'},{time:'8:52',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:07',boss:'Primeval',color:'primeval'},{time:'11:44',boss:'Frostscale',color:'frostscale'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:14',boss:'Primeval',color:'primeval'},{time:'14:57',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'16:22',boss:'Primeval',color:'primeval'},{time:'17:53',boss:'Primeval',color:'primeval'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:19',boss:'Frostscale',color:'frostscale'},{time:'20:40',boss:'Frostscale',color:'frostscale'},{time:'21:56',boss:'Primeval',color:'primeval'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'23:25',boss:'Primeval',color:'primeval'}],5:[{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:44',boss:'Primeval',color:'primeval'},{time:'3:06',boss:'Primeval',color:'primeval'},{time:'4:38',boss:'Frostscale',color:'frostscale'},{time:'6:10',boss:'Primeval',color:'primeval'},{time:'7:52',boss:'Frostscale',color:'frostscale'},{time:'9:23',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:42',boss:'Skypetal',color:'skypetal'},{time:'12:09',boss:'Skypetal',color:'skypetal'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:36',boss:'Frostscale',color:'frostscale'},{time:'14:57',boss:'Skypetal',color:'skypetal'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'16:23',boss:'Skypetal',color:'skypetal'},{time:'17:57',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:25',boss:'Frostscale',color:'frostscale'},{time:'20:59',boss:'Primeval',color:'primeval'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'22:19',boss:'Frostscale',color:'frostscale'},{time:'23:50',boss:'Primeval',color:'primeval'}],6:[{time:'0:52',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'2:30',boss:'Primeval',color:'primeval'},{time:'3:52',boss:'Primeval',color:'primeval'},{time:'5:28',boss:'Skypetal',color:'skypetal'},{time:'6:51',boss:'Skypetal',color:'skypetal'},{time:'8:11',boss:'Frostscale',color:'frostscale'},{time:'9:56',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'11:36',boss:'Frostscale',color:'frostscale'},{time:'12:54',boss:'Skypetal',color:'skypetal'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'14:24',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'16:01',boss:'Primeval',color:'primeval'},{time:'17:25',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:01',boss:'Skypetal',color:'skypetal'},{time:'20:46',boss:'Primeval',color:'primeval'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'22:27',boss:'Frostscale',color:'frostscale'},{time:'23:57',boss:'Skypetal',color:'skypetal'}],0:[{time:'1:00',boss:'Golden Boss Event',color:'golden'},{time:'1:15',boss:'Primeval',color:'primeval'},{time:'2:30',boss:'Primeval',color:'primeval'},{time:'4:06',boss:'Primeval',color:'primeval'},{time:'5:34',boss:'Frostscale',color:'frostscale'},{time:'7:06',boss:'Skypetal',color:'skypetal'},{time:'8:47',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Golden Boss Event',color:'golden'},{time:'10:23',boss:'Skypetal',color:'skypetal'},{time:'11:55',boss:'Frostscale',color:'frostscale'},{time:'13:00',boss:'Golden Boss Event',color:'golden'},{time:'13:18',boss:'Primeval',color:'primeval'},{time:'14:37',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Golden Boss Event',color:'golden'},{time:'16:00',boss:'Skypetal',color:'skypetal'},{time:'17:44',boss:'Primeval',color:'primeval'},{time:'19:00',boss:'Golden Boss Event',color:'golden'},{time:'19:10',boss:'Skypetal',color:'skypetal'},{time:'20:44',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Golden Boss Event',color:'golden'},{time:'22:23',boss:'Skypetal',color:'skypetal'}]};
-    let selectedDay='today',notifiedBosses={};
-    function loadSettings(){const s={enableNotifications:!1,notificationMinutes:'5',soundEnabled:!1};try{const e=window.savedSettings||{};void 0!==e.enableNotifications&&(s.enableNotifications=e.enableNotifications),void 0!==e.notificationMinutes&&(s.notificationMinutes=e.notificationMinutes),void 0!==e.soundEnabled&&(s.soundEnabled=e.soundEnabled),e.notifiedBosses&&(notifiedBosses=e.notifiedBosses)}catch(e){console.log('No previous settings found')}return s}
-    function saveSettings(){const s={enableNotifications:document.getElementById('enableNotifications').checked,notificationMinutes:document.getElementById('notificationMinutes').value,soundEnabled:document.getElementById('soundEnabled').checked,notifiedBosses:notifiedBosses,lastSaved:new Date().toISOString()};window.savedSettings=s;const e=document.getElementById('saveStatus');e.classList.add('show'),setTimeout(function(){e.classList.remove('show')},3e3),console.log('Settings saved:',s)}
-    function applySettings(s){document.getElementById('enableNotifications').checked=s.enableNotifications,document.getElementById('notificationMinutes').value=s.notificationMinutes,document.getElementById('soundEnabled').checked=s.soundEnabled}
-    function cleanOldNotifications(){const e=Date.now(),t=72e5;Object.keys(notifiedBosses).forEach(function(n){notifiedBosses[n]&&e-notifiedBosses[n]>t&&delete notifiedBosses[n]})}
-    function getServerTime(){const e=new Date,t=new Date(e.toLocaleString("en-US",{timeZone:"UTC"}));return new Date(t.getTime()-216e5)}
-    function getUserTimezone(){return Intl.DateTimeFormat().resolvedOptions().timeZone}
-    function parseTime(e,t){const n=e.split(':'),o=parseInt(n[0]),r=parseInt(n[1]),a=getServerTime(),i=new Date(a);return i.setHours(o,r,0,0),i.setDate(i.getDate()+t),i}
-    function getTimeUntilSpawn(e,t){const n=getServerTime(),o=n.getDay();let r=t-o;r<0&&(r+=7);const a=parseTime(e,r),i=a-n;return i<0&&0===r?parseTime(e,7)-n:i}
-    function formatCountdown(e){if(e<=0)return'Spawned';const t=Math.floor(e/1e3),n=Math.floor(t/3600),o=Math.floor(t%3600/60),r=t%60;return String(n).padStart(2,'0')+':'+String(o).padStart(2,'0')+':'+String(r).padStart(2,'0')}
-    function renderBosses(){const e=getServerTime(),t=e.getDay(),n='today'===selectedDay?t:parseInt(selectedDay),o=bossData[n].map(function(e){const t=getTimeUntilSpawn(e.time,n),o=new Date(Date.now()+t);return{boss:e.boss,color:e.color,time:e.time,dayIndex:n,timeUntil:t,countdown:formatCountdown(t),localSpawnTime:o}});let r=o;'today'===selectedDay&&(r=o.filter(function(e){return e.timeUntil<=864e5})),r.sort(function(e,t){return e.timeUntil-t.timeUntil});const a=document.getElementById('bossTable');a.innerHTML='',r.forEach(function(e){const t=document.createElement('tr'),n=e.timeUntil<=0?'spawned':e.color;t.innerHTML='<td><span class="boss-name '+e.color+'">'+e.boss+'</span></td><td><span class="countdown '+n+'">'+e.countdown+'</span></td><td>'+e.time+'</td><td>'+e.localSpawnTime.toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:!1})+'</td>',a.appendChild(t)})}
-    function updateClock(){const e=getServerTime();document.getElementById('serverClock').textContent='Server Time: '+e.toLocaleTimeString('en-US',{hour12:!1})}
-    function checkNotifications(){const e=document.getElementById('enableNotifications').checked;if(!e)return;const t=parseInt(document.getElementById('notificationMinutes').value),n=document.getElementById('soundEnabled').checked;cleanOldNotifications(),Object.keys(bossData).forEach(function(e){bossData[e].forEach(function(o){const r=getTimeUntilSpawn(o.time,parseInt(e)),a=Math.floor(r/1e3),i=Date.now()+r,s=o.boss+'_'+o.time+'_day'+e+'_'+Math.floor(i/6e4),d=60*t-30,c=60*t+30;a>=d&&a<=c&&!notifiedBosses[s]&&(notifiedBosses[s]=Date.now(),showNotification(o.boss,o.time,t,n),window.savedSettings&&(window.savedSettings.notifiedBosses=notifiedBosses),console.log('Notification sent for:',o.boss,'at',o.time,'- Minutes until spawn:',Math.floor(r/6e4)))})})}
-    function showNotification(e,t,n,o){'Notification'in window&&('granted'===Notification.permission?(notification=new Notification('🎮 Boss Spawn Alert!',{body:e+' will spawn in '+n+' minutes at '+t+' (Server Time)!',icon:'🎮',requireInteraction:!0,tag:e+'_'+t}),o&&playNotificationSound(),setTimeout(function(){notification.close()},1e4)):'denied'!==Notification.permission&&Notification.requestPermission().then(function(r){'granted'===r&&showNotification(e,t,n,o)}))}
-    function playNotificationSound(){try{const e=new(window.AudioContext||window.webkitAudioContext),t=e.createOscillator(),n=e.createGain();t.connect(n),n.connect(e.destination),t.frequency.value=800,t.type='sine',n.gain.setValueAtTime(.3,e.currentTime),n.gain.exponentialRampToValueAtTime(.01,e.currentTime+.5),t.start(e.currentTime),t.stop(e.currentTime+.5)}catch(e){console.log('Could not play sound:',e)}}
-    function testNotification(){'Notification'in window?'granted'===Notification.permission?(soundEnabled=document.getElementById('soundEnabled').checked,notification=new Notification('🎮 Boss Tracker Test',{body:'Notifications are working correctly! You will receive alerts like this one.',icon:'🎮',requireInteraction:!1}),soundEnabled&&playNotificationSound(),setTimeout(function(){notification.close()},5e3)):Notification.requestPermission().then(function(e){'granted'===e?testNotification():alert('Please allow notifications in your browser settings to use this feature.')}):alert('Your browser does not support notifications')}
-    document.getElementById('dayFilter').addEventListener('click',function(e){e.target.classList.contains('day-btn')&&(document.querySelectorAll('.day-btn').forEach(function(e){e.classList.remove('active')}),e.target.classList.add('active'),selectedDay=e.target.dataset.day,renderBosses())}),document.getElementById('testNotification').addEventListener('click',testNotification),document.getElementById('saveSettings').addEventListener('click',saveSettings);const savedSettings=loadSettings();applySettings(savedSettings),document.getElementById('userTimezone').textContent=getUserTimezone(),renderBosses(),updateClock(),setInterval(function(){renderBosses(),updateClock(),checkNotifications()},1e3);
-  </script>
+<div class="container">
+<h1>🎮 Boss & Quest Tracker</h1>
+<div class="nav-tabs">
+<button class="nav-tab active" data-tab="boss">📍 Boss Tracker</button>
+<button class="nav-tab" data-tab="quest">✅ Quest Tracker</button>
+</div>
+<div id="boss-tab" class="tab-content active">
+<div class="card">
+<h3>Overview</h3>
+<p>Track boss spawn times across all days of the week. This tracker monitors four boss types: <span class="primeval highlight">Primeval</span>, <span class="frostscale highlight">Frostscale</span>, <span class="skypetal highlight">Skypetal</span>, and <span class="golden highlight">Golden Boss Event</span>.</p>
+<p>Server times are displayed in GMT-6. Your local timezone is <span class="frostscale highlight" id="userTimezone"></span>.</p>
+<div class="server-time"><span>⏰</span><span id="serverClock">00:00:00</span></div>
+</div>
+<div class="card">
+<div class="day-filter" id="dayFilter">
+<button class="day-btn active" data-day="today">Today</button>
+<button class="day-btn" data-day="0">Sunday</button>
+<button class="day-btn" data-day="1">Monday</button>
+<button class="day-btn" data-day="2">Tuesday</button>
+<button class="day-btn" data-day="3">Wednesday</button>
+<button class="day-btn" data-day="4">Thursday</button>
+<button class="day-btn" data-day="5">Friday</button>
+<button class="day-btn" data-day="6">Saturday</button>
+</div>
+</div>
+<div class="card">
+<h3>Boss Schedule</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>📍 Boss Location</th><th>Time Until Spawn</th><th>Server Time</th><th>Next Spawn (Your Time)</th></tr></thead><tbody id="bossTable"></tbody></table></div>
+</div>
+<div class="card">
+<h3>⚙️ Notification Settings</h3>
+<div class="notification-settings">
+<label class="notification-option"><input type="checkbox" id="enableNotifications"><span>🔔 Enable Notifications</span></label>
+<div class="notification-inline"><label>Alert me</label><select id="notificationMinutes"><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="20">20 minutes before</option><option value="30">30 minutes before</option></select><button class="btn-test" id="testNotification">Test Notification</button></div>
+<label class="notification-option"><input type="checkbox" id="soundEnabled"><span>🔊 Play Sound with Notification</span></label>
+<div class="note-box"><p><strong>Note:</strong> Browser notifications must be enabled for this feature to work.</p></div>
+<button class="btn-save" id="saveSettings">💾 Save Settings</button>
+<div class="save-status success" id="saveStatus">✓ Settings saved!</div>
+</div>
+</div>
+</div>
+<div id="quest-tab" class="tab-content">
+<div class="card">
+<h3>📊 Progress Overview</h3>
+<div class="summary-grid">
+<div class="summary-card"><h4>Completed</h4><div class="value earned" id="completedCount">0/30</div><div class="subtitle">Quests Finished</div><div class="progress-bar-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div></div>
+<div class="summary-card"><h4>Gold Earned</h4><div class="value earned" id="goldEarned">0g</div><div class="subtitle">From Completed Quests</div></div>
+<div class="summary-card"><h4>Gold Lost</h4><div class="value lost" id="goldLost">0g</div><div class="subtitle">From Incomplete Quests</div></div>
+<div class="summary-card"><h4>XP Earned</h4><div class="value earned" id="xpEarned">0</div><div class="subtitle">Experience Points</div></div>
+<div class="summary-card"><h4>XP Lost</h4><div class="value lost" id="xpLost">0</div><div class="subtitle">From Incomplete Quests</div></div>
+<div class="summary-card"><h4>Total Daily Value</h4><div class="value total" id="totalValue">0g</div><div class="subtitle">Total Gold + <span id="totalXP">0</span> XP</div></div>
+</div>
+<div class="button-group">
+<button class="btn btn-complete" id="completeAll">✓ Complete All</button>
+<button class="btn btn-reset" id="resetAll">↺ Reset All</button>
+</div>
+</div>
+<div class="card">
+<h3>🗺️ Quest List</h3>
+<div class="quest-section"><h4>Frostscale Basin</h4><div id="frostscale-quests"></div></div>
+<div class="quest-section"><h4>Ancient Lunar (MSP)</h4><div id="msp-quests"></div></div>
+<div class="quest-section"><h4>Silvefrost Faction (SSP)</h4><div id="ssp-quests"></div></div>
+<div class="quest-section"><h4>Mushin Tower (F7)</h4><div id="mushin-quests"></div></div>
+<div class="quest-section"><h4>Silverfrost Fieldboss</h4><div id="fieldboss-quests"></div></div>
+<div class="quest-section"><h4>Silverfrost Blues</h4><div id="blues-quests"></div></div>
+<div class="quest-section"><h4>Silverfrost Asura</h4><div id="asura-quests"></div></div>
+<div class="quest-section"><h4>Moonwater Plains</h4><div id="moonwater-quests"></div></div>
+<div class="note-box"><p><strong>Note:</strong> Your progress is automatically saved in your browser.</p></div>
+</div>
+</div>
+<div class="footer"><p>Boss & Quest Tracker | Real-time countdown, notifications, and progress tracking</p></div>
+</div>
+<script src="boss-quest-tracker.js"></script>
 </body>
 </html>
