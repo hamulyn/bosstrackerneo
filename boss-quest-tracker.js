@@ -319,8 +319,8 @@ const questData = {
   'moonwater': [
     { name: 'Moonwater Plains Evildoer Sweep', gold: 1, silver: 25, copper: 0, xp: 5200 },
     { name: 'Moonwater Plains Darkness Sweep', gold: 0, silver: 53, copper: 0, xp: 4400 },
-    { name: 'Gale of Darkness', gold: 1, silver: 25, copper: 0, xp: 6100 },
-    { name: 'Wailing Souls', gold: 1, silver: 25, copper: 0, xp: 6100 }
+    { name: 'Gale of Darkness (SSG)', gold: 1, silver: 25, copper: 0, xp: 6100 },
+    { name: 'Wailing Souls (Tree)', gold: 1, silver: 25, copper: 0, xp: 6100 }
   ]
 };
 
