@@ -312,7 +312,9 @@ const questData = {
   ],
   'silverfrost': [
     { name: 'The Gatecrasher', gold: 1, silver: 70, copper: 0, xp: 6200 },
-    { name: 'Be Ido Rides Again', gold: 1, silver: 70, copper: 0, xp: 6200 }
+    { name: 'Be Ido Rides Again', gold: 1, silver: 70, copper: 0, xp: 6200 },
+    { name: 'Asura\'s Return', gold: 1, silver: 70, copper: 0, xp: 6700 },
+    { name: 'Two Shadows', gold: 1, silver: 70, copper: 0, xp: 6700 }
   ],
   'moonwater': [
     { name: 'Moonwater Plains Evildoer Sweep', gold: 1, silver: 25, copper: 0, xp: 5200 },
