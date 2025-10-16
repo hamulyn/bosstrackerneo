@@ -484,7 +484,7 @@ renderQuests();
 calculateTotals();
 
 // ============= BOSS SPAWN REPORT SYSTEM =============
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec'; // Replace with your Google Apps Script Web App URL
 
 // Load recent reports from storage
 function loadRecentReports() {
@@ -559,7 +559,7 @@ document.getElementById('reportForm').addEventListener('submit', async function(
   
   // Send to Google Sheets
   try {
-    const response = await fetch(https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec, {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: {
