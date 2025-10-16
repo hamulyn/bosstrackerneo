@@ -14,6 +14,7 @@
 <div class="nav-tabs">
 <button class="nav-tab active" data-tab="boss">📍 Boss Tracker</button>
 <button class="nav-tab" data-tab="quest">✅ Quest Tracker</button>
+<button class="nav-tab" data-tab="report">📝 Report Boss Spawn</button>
 </div>
 <div id="boss-tab" class="tab-content active">
 <div class="card">
@@ -81,6 +82,73 @@
 <div class="quest-section"><h4>Silverfrost</h4><div id="silverfrost-quests"></div></div>
 <div class="quest-section"><h4>Moonwater Plains</h4><div id="moonwater-quests"></div></div>
 <div class="note-box"><p><strong>Note:</strong> Your progress is automatically saved in your browser.</p></div>
+</div>
+</div>
+<div id="report-tab" class="tab-content">
+<div class="card">
+<h3>📝 Report Boss Spawn</h3>
+<p>Help the community by reporting boss spawn locations! Your reports will be collected to improve the boss schedule accuracy.</p>
+<div class="note-box" style="background: rgba(88, 166, 255, 0.15); border-color: #58a6ff; margin-top: 1rem; margin-bottom: 2rem;">
+<p style="color: #58a6ff; font-weight: bold;">ℹ️ How to Report:</p>
+<p style="color: #58a6ff;">When you see a boss spawn, immediately fill out this form with the correct information. All reports are saved to help complete the spawn calendar.</p>
+</div>
+<form id="reportForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Day of the Week</label>
+<select id="reportDay" required style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem; cursor: pointer;">
+<option value="">Select a day...</option>
+<option value="0">Sunday</option>
+<option value="1">Monday</option>
+<option value="2">Tuesday</option>
+<option value="3">Wednesday</option>
+<option value="4">Thursday</option>
+<option value="5">Friday</option>
+<option value="6">Saturday</option>
+</select>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Spawn Time (Server Time GMT-6)</label>
+<input type="time" id="reportTime" required style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem;">
+</div>
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Boss Type</label>
+<select id="reportBoss" required style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem; cursor: pointer;">
+<option value="">Select boss type...</option>
+<option value="Primeval">Primeval (Primeval Forest)</option>
+<option value="Frostscale">Frostscale (Frostscale Basin)</option>
+<option value="Skypetal">Skypetal (Skypetal Plains)</option>
+</select>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Additional Notes (Optional)</label>
+<textarea id="reportNotes" placeholder="Any additional information about the spawn..." style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem; min-height: 100px; resize: vertical; font-family: inherit;"></textarea>
+</div>
+<button type="submit" class="btn-save" style="margin-top: 0;">📤 Submit Report</button>
+<div class="save-status success" id="reportStatus" style="margin-top: 0;">✓ Report submitted successfully! Thank you for your contribution.</div>
+<div class="save-status" id="reportError" style="margin-top: 0; background: rgba(248, 81, 73, 0.2); color: #f85149; border: 1px solid #f85149;">❌ Error submitting report. Please try again.</div>
+</form>
+</div>
+<div class="card">
+<h3>📊 Recent Reports</h3>
+<p style="margin-bottom: 1.5rem;">Latest boss spawn reports from the community</p>
+<div style="overflow-x: auto;">
+<table>
+<thead>
+<tr>
+<th>Date & Time</th>
+<th>Day</th>
+<th>Spawn Time</th>
+<th>Boss</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody id="reportsTable">
+<tr>
+<td colspan="5" style="text-align: center; color: #8b949e; padding: 2rem;">No reports yet. Be the first to contribute!</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="footer"><p>Boss & Quest Tracker | Real-time countdown, notifications, and progress tracking</p></div>
