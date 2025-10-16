@@ -559,7 +559,7 @@ document.getElementById('reportForm').addEventListener('submit', async function(
   
   // Send to Google Sheets
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
+    const response = await fetch(https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec, {
       method: 'POST',
       mode: 'no-cors',
       headers: {
