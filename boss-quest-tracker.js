@@ -588,3 +588,99 @@ document.getElementById('reportForm').addEventListener('submit', async function(
 
 // Initialize reports on page load
 loadRecentReports();
+// === Boss Spawn Report - Restrict to Predefined Times ===
+const reportTimeSelect = document.getElementById('reportTimeSelect');
+const reportTimeCustom = document.getElementById('reportTimeCustom');
+
+
+reportDaySelect.addEventListener('change', function() {
+const selectedDay = parseInt(this.value);
+reportTimeSelect.innerHTML = '<option value="">Select a time...</option>';
+
+
+if (!isNaN(selectedDay) && bossData[selectedDay]) {
+const times = [...new Set(bossData[selectedDay].map(b => b.time))];
+times.sort((a, b) => {
+const [ah, am] = a.split(':').map(Number);
+const [bh, bm] = b.split(':').map(Number);
+return ah * 60 + am - (bh * 60 + bm);
+});
+
+
+times.forEach(t => {
+const opt = document.createElement('option');
+opt.value = t;
+opt.textContent = t;
+reportTimeSelect.appendChild(opt);
+});
+
+
+const otherOpt = document.createElement('option');
+otherOpt.value = 'other';
+otherOpt.textContent = 'Other time...';
+reportTimeSelect.appendChild(otherOpt);
+}
+});
+
+
+reportTimeSelect.addEventListener('change', function() {
+if (this.value === 'other') {
+reportTimeCustom.style.display = 'block';
+reportTimeCustom.required = true;
+} else {
+reportTimeCustom.style.display = 'none';
+reportTimeCustom.required = false;
+}
+});
+
+
+document.getElementById('reportForm').addEventListener('submit', async function(e) {
+e.preventDefault();
+
+
+const day = parseInt(document.getElementById('reportDay').value);
+let time = document.getElementById('reportTimeSelect').value;
+if (time === 'other') time = document.getElementById('reportTimeCustom').value;
+const boss = document.getElementById('reportBoss').value;
+const notes = document.getElementById('reportNotes').value;
+
+
+if (!day || !time || !boss) return;
+
+
+const report = {
+timestamp: new Date().toISOString(),
+day,
+time,
+boss,
+notes
+};
+
+
+const reports = window.bossReports || [];
+reports.push(report);
+window.bossReports = reports;
+renderReports(reports);
+
+
+try {
+await fetch(GOOGLE_SCRIPT_URL, {
+method: 'POST',
+mode: 'no-cors',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(report)
+});
+
+
+const statusEl = document.getElementById('reportStatus');
+statusEl.classList.add('show');
+setTimeout(() => statusEl.classList.remove('show'), 3000);
+document.getElementById('reportForm').reset();
+reportTimeCustom.style.display = 'none';
+} catch (error) {
+console.error('Error submitting report:', error);
+const errorEl = document.getElementById('reportError');
+errorEl.classList.add('show');
+setTimeout(() => errorEl.classList.remove('show'), 3000);
+}
+});
