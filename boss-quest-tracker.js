@@ -482,3 +482,109 @@ document.getElementById('completeAll').addEventListener('click', function() {
 loadProgress();
 renderQuests();
 calculateTotals();
+
+// ============= BOSS SPAWN REPORT SYSTEM =============
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your Google Apps Script Web App URL
+
+// Load recent reports from storage
+function loadRecentReports() {
+  try {
+    const reports = window.bossReports || [];
+    renderReports(reports);
+  } catch (e) {
+    console.log('No saved reports found');
+  }
+}
+
+// Render reports table
+function renderReports(reports) {
+  const table = document.getElementById('reportsTable');
+  
+  if (reports.length === 0) {
+    table.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #8b949e; padding: 2rem;">No reports yet. Be the first to contribute!</td></tr>';
+    return;
+  }
+  
+  table.innerHTML = '';
+  
+  // Show last 10 reports, most recent first
+  reports.slice(-10).reverse().forEach(report => {
+    const row = document.createElement('tr');
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const bossColors = {
+      'Primeval': 'primeval',
+      'Frostscale': 'frostscale',
+      'Skypetal': 'skypetal'
+    };
+    
+    row.innerHTML = `
+      <td>${new Date(report.timestamp).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+      <td>${dayNames[report.day]}</td>
+      <td><span style="font-family: monospace; font-weight: bold;">${report.time}</span></td>
+      <td><span class="boss-name ${bossColors[report.boss]}">${report.boss}</span></td>
+      <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${report.notes || '-'}</td>
+    `;
+    table.appendChild(row);
+  });
+}
+
+// Handle form submission
+document.getElementById('reportForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const day = document.getElementById('reportDay').value;
+  const time = document.getElementById('reportTime').value;
+  const boss = document.getElementById('reportBoss').value;
+  const notes = document.getElementById('reportNotes').value;
+  
+  if (!day || !time || !boss) {
+    return;
+  }
+  
+  const report = {
+    timestamp: new Date().toISOString(),
+    day: parseInt(day),
+    time: time,
+    boss: boss,
+    notes: notes
+  };
+  
+  // Save locally first
+  const reports = window.bossReports || [];
+  reports.push(report);
+  window.bossReports = reports;
+  
+  // Update table
+  renderReports(reports);
+  
+  // Send to Google Sheets
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(report)
+    });
+    
+    // Show success message
+    const statusEl = document.getElementById('reportStatus');
+    statusEl.classList.add('show');
+    setTimeout(() => statusEl.classList.remove('show'), 3000);
+    
+    // Reset form
+    document.getElementById('reportForm').reset();
+    
+  } catch (error) {
+    console.error('Error submitting report:', error);
+    
+    // Show error message
+    const errorEl = document.getElementById('reportError');
+    errorEl.classList.add('show');
+    setTimeout(() => errorEl.classList.remove('show'), 3000);
+  }
+});
+
+// Initialize reports on page load
+loadRecentReports();
