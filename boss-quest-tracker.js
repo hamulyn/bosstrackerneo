@@ -486,6 +486,67 @@ calculateTotals();
 // ============= BOSS SPAWN REPORT SYSTEM =============
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec'; // Replace with your Google Apps Script Web App URL
 
+// Get all spawn times for a specific day
+function getSpawnTimesForDay(dayIndex) {
+  if (!bossData[dayIndex]) return [];
+  
+  const times = bossData[dayIndex].map(boss => boss.time);
+  // Remove duplicates and sort
+  const uniqueTimes = [...new Set(times)].sort();
+  
+  return uniqueTimes;
+}
+
+// Update spawn time dropdown when day changes
+document.getElementById('reportDay').addEventListener('change', function() {
+  const dayIndex = parseInt(this.value);
+  const timeSelect = document.getElementById('reportTime');
+  const customSection = document.getElementById('customTimeSection');
+  
+  // Clear existing options
+  timeSelect.innerHTML = '<option value="">Select spawn time...</option>';
+  
+  if (dayIndex >= 0) {
+    // Get spawn times for selected day
+    const spawnTimes = getSpawnTimesForDay(dayIndex);
+    
+    // Add predefined times
+    spawnTimes.forEach(time => {
+      const option = document.createElement('option');
+      option.value = time;
+      option.textContent = time;
+      timeSelect.appendChild(option);
+    });
+    
+    // Add "Custom Time" option
+    const customOption = document.createElement('option');
+    customOption.value = 'custom';
+    customOption.textContent = '➕ Add New Time (Custom)';
+    customOption.style.fontWeight = 'bold';
+    customOption.style.color = '#58a6ff';
+    timeSelect.appendChild(customOption);
+  }
+  
+  // Reset custom time section
+  customSection.style.display = 'none';
+  document.getElementById('customTime').value = '';
+});
+
+// Show/hide custom time input
+document.getElementById('reportTime').addEventListener('change', function() {
+  const customSection = document.getElementById('customTimeSection');
+  const customTimeInput = document.getElementById('customTime');
+  
+  if (this.value === 'custom') {
+    customSection.style.display = 'block';
+    customTimeInput.required = true;
+  } else {
+    customSection.style.display = 'none';
+    customTimeInput.required = false;
+    customTimeInput.value = '';
+  }
+});
+
 // Load recent reports from storage
 function loadRecentReports() {
   try {
@@ -517,10 +578,15 @@ function renderReports(reports) {
       'Skypetal': 'skypetal'
     };
     
+    // Add badge for custom times
+    const timeDisplay = report.isCustomTime 
+      ? `<span style="font-family: monospace; font-weight: bold;">${report.time}</span> <span style="background: #58a6ff; color: #0d1117; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-left: 4px;">NEW</span>`
+      : `<span style="font-family: monospace; font-weight: bold;">${report.time}</span>`;
+    
     row.innerHTML = `
       <td>${new Date(report.timestamp).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
       <td>${dayNames[report.day]}</td>
-      <td><span style="font-family: monospace; font-weight: bold;">${report.time}</span></td>
+      <td>${timeDisplay}</td>
       <td><span class="boss-name ${bossColors[report.boss]}">${report.boss}</span></td>
       <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${report.notes || '-'}</td>
     `;
@@ -533,11 +599,22 @@ document.getElementById('reportForm').addEventListener('submit', async function(
   e.preventDefault();
   
   const day = document.getElementById('reportDay').value;
-  const time = document.getElementById('reportTime').value;
+  let time = document.getElementById('reportTime').value;
   const boss = document.getElementById('reportBoss').value;
   const notes = document.getElementById('reportNotes').value;
   
+  // If custom time is selected, use the custom time input
+  if (time === 'custom') {
+    const customTime = document.getElementById('customTime').value;
+    if (!customTime) {
+      alert('Please enter a custom time');
+      return;
+    }
+    time = customTime;
+  }
+  
   if (!day || !time || !boss) {
+    alert('Please fill in all required fields');
     return;
   }
   
@@ -546,7 +623,8 @@ document.getElementById('reportForm').addEventListener('submit', async function(
     day: parseInt(day),
     time: time,
     boss: boss,
-    notes: notes
+    notes: notes,
+    isCustomTime: document.getElementById('reportTime').value === 'custom'
   };
   
   // Save locally first
@@ -575,6 +653,8 @@ document.getElementById('reportForm').addEventListener('submit', async function(
     
     // Reset form
     document.getElementById('reportForm').reset();
+    document.getElementById('customTimeSection').style.display = 'none';
+    document.getElementById('reportTime').innerHTML = '<option value="">Select spawn time...</option>';
     
   } catch (error) {
     console.error('Error submitting report:', error);
@@ -588,14 +668,3 @@ document.getElementById('reportForm').addEventListener('submit', async function(
 
 // Initialize reports on page load
 loadRecentReports();
-
-// MODIFICATION: Open the time picker when clicking anywhere on the time input field
-document.getElementById('reportTime').addEventListener('click', function() {
-    try {
-        // This modern API programmatically shows the browser's picker UI
-        this.showPicker();
-    } catch (e) {
-        // Fallback for browsers that do not support it
-        console.log("Browser does not support the .showPicker() method.");
-    }
-});
