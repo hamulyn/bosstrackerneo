@@ -484,7 +484,7 @@ renderQuests();
 calculateTotals();
 
 // ============= BOSS SPAWN REPORT SYSTEM =============
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec'; // Replace with your Google Apps Script Web App URL
 
 // Get all spawn times for a specific day
 function getSpawnTimesForDay(dayIndex) {
