@@ -484,7 +484,7 @@ renderQuests();
 calculateTotals();
 
 // ============= BOSS SPAWN REPORT SYSTEM =============
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwk_hRPQezbkjWO_NilIv_kchtXxZu9FhbYDitbnds7kqFnwjafR1jXSpi9zknhdFVI4w/exec'; // Replace with your Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your Google Apps Script Web App URL
 
 // Get all spawn times for a specific day
 function getSpawnTimesForDay(dayIndex) {
@@ -540,11 +540,21 @@ document.getElementById('reportTime').addEventListener('change', function() {
   if (this.value === 'custom') {
     customSection.style.display = 'block';
     customTimeInput.required = true;
+    // Auto-focus and open time picker
+    setTimeout(() => {
+      customTimeInput.focus();
+      customTimeInput.showPicker();
+    }, 100);
   } else {
     customSection.style.display = 'none';
     customTimeInput.required = false;
     customTimeInput.value = '';
   }
+});
+
+// Open time picker when clicking anywhere on the input field
+document.getElementById('customTime').addEventListener('click', function() {
+  this.showPicker();
 });
 
 // Load recent reports from storage
