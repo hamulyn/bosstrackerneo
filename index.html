@@ -108,7 +108,13 @@
 </div>
 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
 <label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Spawn Time (Server Time GMT-6)</label>
-<input type="time" id="reportTime" required style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem;">
+<select id="reportTime" required style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem; cursor: pointer;">
+<option value="">Select spawn time...</option>
+</select>
+<div id="customTimeSection" style="display: none; margin-top: 0.5rem;">
+<label style="color: #8b949e; font-size: 0.85rem; margin-bottom: 0.25rem; display: block;">Enter custom time:</label>
+<input type="time" id="customTime" style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; color: #c9d1d9; font-size: 1rem; width: 100%;">
+</div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
 <label style="color: #58a6ff; font-weight: bold; font-size: 0.95rem;">Boss Type</label>
