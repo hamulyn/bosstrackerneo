@@ -52,7 +52,33 @@
 <label class="notification-option"><input type="checkbox" id="enableNotifications"><span>🔔 Enable Notifications</span></label>
 <div class="notification-inline"><label>Alert me</label><select id="notificationMinutes"><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="20">20 minutes before</option><option value="30">30 minutes before</option></select><button class="btn-test" id="testNotification">Test Notification</button></div>
 <label class="notification-option"><input type="checkbox" id="soundEnabled"><span>🔊 Play Sound with Notification</span></label>
-<div class="note-box"><p><strong>Note:</strong> Browser notifications must be enabled for this feature to work.</p></div>
+
+<div style="border-top:1px solid #30363d;margin-top:1.5rem;padding-top:1.5rem">
+<h4 style="color:#58a6ff;margin-bottom:1rem;font-size:1.1rem">📍 Select Regions to Notify</h4>
+
+<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifySilverfrost"><span>❄️ Silverfrost Mountains</span></label>
+<div id="silverfrost-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-primeval"><span class="primeval">🌲 Primeval (Primeval Forest)</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-frostscale"><span class="frostscale">❄️ Frostscale (Frostscale Basin)</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-skypetal"><span class="skypetal">🌸 Skypetal (Skypetal Plains)</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-golden"><span class="golden">👑 Raging Yeti (Golden Boss)</span></label>
+</div>
+
+<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifyMoonwater"><span>🌊 Moonwater Plains</span></label>
+<div id="moonwater-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-kaari"><span class="ciano">💎 Kaari Lord</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-profane"><span class="frostscale">⚔️ Profane Jiangshi</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-lycan"><span class="primeval">🐺 Lycan the Mighty</span></label>
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-safiji"><span class="skypetal">🔥 Safiji</span></label>
+</div>
+
+<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifyRituals"><span>🔮 Rituals</span></label>
+<div id="rituals-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
+<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="rituals-all"><span class="primeval">✨ All Ritual Bosses</span></label>
+</div>
+</div>
+
+<div class="note-box"><p><strong>Note:</strong> Browser notifications must be enabled for this feature to work. Select which regions and bosses you want to be notified about.</p></div>
 <button class="btn-save" id="saveSettings">💾 Save Settings</button>
 <div class="save-status success" id="saveStatus">✓ Settings saved!</div>
 </div>
@@ -63,8 +89,8 @@
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
 <span style="font-size:3rem">🚧</span>
 <div>
-<h3 style="color:#ff8c00;margin:0;border:none;padding:0">Under Construction</h3>
-<p style="color:#ff8c00;margin:0.5rem 0 0 0;font-weight:500">Quest Tracker is currently under development. This feature will be available soon!</p>
+<h3 style="color:#ff8c00;margin:0;border:none;padding:0">Em Construção</h3>
+<p style="color:#ff8c00;margin:0.5rem 0 0 0;font-weight:500">O Quest Tracker está atualmente em desenvolvimento. Esta funcionalidade estará disponível em breve!</p>
 </div>
 </div>
 </div>
