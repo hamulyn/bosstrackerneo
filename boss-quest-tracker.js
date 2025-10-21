@@ -1,4 +1,4 @@
-// ============= TAB SWITCHING =============
+// ===== TAB SWITCHING =====
 document.querySelectorAll('.nav-tab').forEach(tab => {
   tab.addEventListener('click', function() {
     const tabName = this.dataset.tab;
@@ -9,8 +9,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
   });
 });
 
-// ============= BOSS TRACKER CODE =============
-// Silverfrost Bosses
+// ===== BOSS DATA =====
 const silverfrostData = {
   1: [{time:'0:00',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:25',boss:'Primeval',color:'primeval'},{time:'2:54',boss:'Frostscale',color:'frostscale'},{time:'4:28',boss:'Skypetal',color:'skypetal'},{time:'5:55',boss:'Frostscale',color:'frostscale'},{time:'7:21',boss:'Skypetal',color:'skypetal'},{time:'8:56',boss:'Primeval',color:'primeval'},{time:'10:29',boss:'Primeval',color:'primeval'},{time:'11:59',boss:'Frostscale',color:'frostscale'},{time:'13:25',boss:'Frostscale',color:'frostscale'},{time:'14:56',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:24',boss:'Primeval',color:'primeval'},{time:'17:52',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:26',boss:'Skypetal',color:'skypetal'},{time:'20:52',boss:'Primeval',color:'primeval'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:22',boss:'Frostscale',color:'frostscale'},{time:'23:56',boss:'Skypetal',color:'skypetal'}],
   2: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:02',boss:'Skypetal',color:'skypetal'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'22:00',boss:'Raging Yeti',color:'golden'}],
@@ -21,24 +20,22 @@ const silverfrostData = {
   0: [{time:'0:59',boss:'Kaari',color:'primeval'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'2:33',boss:'Profane',color:'frostscale'},{time:'4:08',boss:'Safiji',color:'skypetal'},{time:'5:35',boss:'Profane',color:'frostscale'},{time:'7:03',boss:'Safiji',color:'skypetal'},{time:'8:38',boss:'Profane',color:'frostscale'},{time:'10:03',boss:'Lycan',color:'primeval'},{time:'11:37',boss:'Lycan',color:'primeval'},{time:'13:05',boss:'Profane',color:'frostscale'},{time:'14:37',boss:'Profane',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:12',boss:'Profane',color:'frostscale'},{time:'17:42',boss:'Kaari',color:'primeval'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:10',boss:'Lycan',color:'primeval'},{time:'20:42',boss:'Kaari',color:'primeval'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:07',boss:'Safiji',color:'skypetal'},{time:'23:34',boss:'Profane',color:'frostscale'}]
 };
 
-// Moonwater Bosses
 const moonwaterData = {
   1: [{time:'2:34',boss:'Kaari',color:'primeval'},{time:'4:04',boss:'Profane',color:'frostscale'},{time:'5:32',boss:'Lycan',color:'primeval'},{time:'8:31',boss:'Safiji',color:'skypetal'},{time:'9:56',boss:'Profane',color:'frostscale'},{time:'11:30',boss:'Safiji',color:'skypetal'},{time:'12:54',boss:'Kaari',color:'primeval'},{time:'14:25',boss:'Kaari',color:'primeval'},{time:'16:00',boss:'Profane',color:'frostscale'},{time:'17:32',boss:'Safiji',color:'skypetal'},{time:'19:07',boss:'Lycan',color:'primeval'},{time:'20:39',boss:'Lycan',color:'primeval'},{time:'22:07',boss:'Kaari',color:'primeval'},{time:'23:35',boss:'Profane',color:'frostscale'}],
   2: [{time:'0:58',boss:'Lycan',color:'primeval'},{time:'10:05',boss:'Kaari',color:'primeval'},{time:'11:33',boss:'Profane',color:'frostscale'},{time:'12:58',boss:'Kaari',color:'primeval'},{time:'14:28',boss:'Safiji',color:'skypetal'},{time:'15:58',boss:'Profane',color:'frostscale'},{time:'17:31',boss:'Lycan',color:'primeval'},{time:'18:22',boss:'Profane',color:'frostscale'},{time:'20:26',boss:'Kaari',color:'primeval'},{time:'21:52',boss:'Kaari',color:'primeval'},{time:'23:25',boss:'Profane',color:'frostscale'}],
   3: [{time:'1:25',boss:'Lycan',color:'primeval'},{time:'3:00',boss:'Safiji',color:'skypetal'},{time:'4:30',boss:'Kaari',color:'primeval'},{time:'6:02',boss:'Kaari',color:'primeval'},{time:'7:28',boss:'Lycan',color:'primeval'},{time:'9:01',boss:'Kaari',color:'primeval'},{time:'10:33',boss:'Safiji',color:'skypetal'},{time:'12:00',boss:'Safiji',color:'skypetal'},{time:'13:33',boss:'Profane',color:'frostscale'},{time:'14:57',boss:'Lycan',color:'primeval'},{time:'16:25',boss:'Lycan',color:'primeval'},{time:'17:45',boss:'Profane',color:'frostscale'},{time:'19:16',boss:'Kaari',color:'primeval'},{time:'20:51',boss:'Lycan',color:'primeval'},{time:'22:10',boss:'Kaari',color:'primeval'},{time:'23:48',boss:'Kaari',color:'primeval'}],
   4: [{time:'2:28',boss:'Profane',color:'frostscale'},{time:'4:03',boss:'Lycan',color:'primeval'},{time:'5:31',boss:'Profane',color:'frostscale'},{time:'7:05',boss:'Profane',color:'frostscale'},{time:'8:36',boss:'Lycan',color:'primeval'},{time:'10:05',boss:'Profane',color:'frostscale'},{time:'11:35',boss:'Profane',color:'frostscale'},{time:'13:00',boss:'Kaari',color:'primeval'},{time:'14:25',boss:'Profane',color:'frostscale'},{time:'15:52',boss:'Lycan',color:'primeval'},{time:'17:18',boss:'Lycan',color:'primeval'},{time:'18:43',boss:'Safiji',color:'skypetal'},{time:'20:17',boss:'Safiji',color:'skypetal'},{time:'21:50',boss:'Safiji',color:'skypetal'},{time:'23:20',boss:'Safiji',color:'skypetal'}],
   5: [{time:'0:00',boss:'Kaari',color:'primeval'},{time:'1:28',boss:'Kaari',color:'primeval'},{time:'2:50',boss:'Safiji',color:'skypetal'},{time:'4:26',boss:'Lycan',color:'primeval'},{time:'5:53',boss:'Lycan',color:'primeval'},{time:'7:25',boss:'Safiji',color:'skypetal'},{time:'8:57',boss:'Safiji',color:'skypetal'},{time:'10:29',boss:'Kaari',color:'primeval'},{time:'11:57',boss:'Safiji',color:'skypetal'},{time:'13:24',boss:'Profane',color:'frostscale'},{time:'14:49',boss:'Safiji',color:'skypetal'},{time:'16:15',boss:'Kaari',color:'primeval'},{time:'17:47',boss:'Profane',color:'frostscale'},{time:'19:21',boss:'Kaari',color:'primeval'},{time:'20:53',boss:'Profane',color:'frostscale'},{time:'22:20',boss:'Lycan',color:'primeval'},{time:'23:40',boss:'Lycan',color:'primeval'}],
-  6: [{time:'0:20',boss:'Safiji',color:'skypetal'},{time:'1:58',boss:'Unknown',color:'unknown'},{time:'3:20',boss:'Unknown',color:'unknown'},{time:'4:56',boss:'Unknown',color:'unknown'},{time:'6:19',boss:'Unknown',color:'unknown'},{time:'7:39',boss:'Unknown',color:'unknown'},{time:'9:24',boss:'Unknown',color:'unknown'},{time:'11:04',boss:'Unknown',color:'unknown'},{time:'12:22',boss:'Unknown',color:'unknown'},{time:'13:52',boss:'Unknown',color:'unknown'},{time:'15:29',boss:'Unknown',color:'unknown'},{time:'16:53',boss:'Unknown',color:'unknown'},{time:'18:29',boss:'Unknown',color:'unknown'},{time:'20:14',boss:'Unknown',color:'unknown'},{time:'21:55',boss:'Unknown',color:'unknown'},{time:'23:25',boss:'Unknown',color:'unknown'}],
-  0: [{time:'0:43',boss:'Unknown',color:'unknown'},{time:'1:58',boss:'Unknown',color:'unknown'},{time:'3:34',boss:'Unknown',color:'unknown'},{time:'5:02',boss:'Unknown',color:'unknown'},{time:'6:34',boss:'Unknown',color:'unknown'},{time:'8:15',boss:'Unknown',color:'unknown'},{time:'9:51',boss:'Unknown',color:'unknown'},{time:'11:23',boss:'Unknown',color:'unknown'},{time:'12:46',boss:'Unknown',color:'unknown'},{time:'14:05',boss:'Unknown',color:'unknown'},{time:'15:28',boss:'Unknown',color:'unknown'},{time:'17:12',boss:'Unknown',color:'unknown'},{time:'18:38',boss:'Unknown',color:'unknown'},{time:'20:12',boss:'Unknown',color:'unknown'},{time:'21:51',boss:'Unknown',color:'unknown'}]
+  6: [{time:'0:20',boss:'Safiji',color:'skypetal'}],
+  0: []
 };
 
-// Rituals
 const ritualsData = {
   1: [{time:'6:10',boss:'Necro',color:'primeval'},{time:'11:01',boss:'Gloomdross',color:'primeval'},{time:'15:21',boss:'Fishing Longe',color:'primeval'},{time:'19:42',boss:'Gloomdross',color:'primeval'}],
-  2: [{time:'8:26',boss:'Yehara Rebel',color:'primeval'},{time:'11:30',boss:'Sentinel',color:'primeval'},{time:'14:47',boss:'Unknown',color:'unknown'}],
-  3: [{time:'6:52',boss:'Gloomdross',color:'primeval'},{time:'14:34',boss:'Unknown',color:'unknown'}],
-  4: [{time:'8:59',boss:'Unknown',color:'unknown'},{time:'12:09',boss:'Rebel',color:'primeval'},{time:'15:03',boss:'Unknown',color:'unknown'}],
-  5: [{time:'8:38',boss:'Rebel',color:'primeval'},{time:'12:34',boss:'Unknown',color:'unknown'}],
+  2: [{time:'8:26',boss:'Yehara Rebel',color:'primeval'},{time:'11:30',boss:'Sentinel',color:'primeval'}],
+  3: [{time:'6:52',boss:'Gloomdross',color:'primeval'}],
+  4: [{time:'12:09',boss:'Rebel',color:'primeval'}],
+  5: [{time:'8:38',boss:'Rebel',color:'primeval'}],
   6: [{time:'9:37',boss:'Clear Sky',color:'primeval'},{time:'12:08',boss:'Gloomdross',color:'primeval'},{time:'14:42',boss:'Gloomdross',color:'primeval'},{time:'19:06',boss:'Oakshade',color:'primeval'}],
   0: []
 };
@@ -46,153 +43,12 @@ const ritualsData = {
 let selectedDay = 'today';
 let selectedRegion = 'silverfrost';
 let notifiedBosses = {};
-const bossData = silverfrostData;',color:'primeval'},{time:'3:58',boss:'Primeval',color:'primeval'},{time:'5:24',boss:'Skypetal',color:'skypetal'},{time:'6:55',boss:'Skypetal',color:'skypetal'},{time:'8:24',boss:'Primeval',color:'primeval'},{time:'9:54',boss:'Primeval',color:'primeval'},{time:'11:25',boss:'Primeval',color:'primeval'},{time:'13:00',boss:'Primeval',color:'primeval'},{time:'14:29',boss:'Skypetal',color:'skypetal'},{time:'15:54',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:25',boss:'Primeval',color:'primeval'},{time:'18:55',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:24',boss:'Frostscale',color:'frostscale'},{time:'21:59',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:25',boss:'Frostscale',color:'frostscale'}],
-  5: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:32',boss:'Frostscale',color:'frostscale'},{time:'3:04',boss:'Primeval',color:'primeval'},{time:'4:37',boss:'Primeval',color:'primeval'},{time:'6:09',boss:'Primeval',color:'primeval'},{time:'7:35',boss:'Frostscale',color:'frostscale'},{time:'9:06',boss:'Skypetal',color:'skypetal'},{time:'10:37',boss:'Primeval',color:'primeval'},{time:'12:04',boss:'Frostscale',color:'frostscale'},{time:'13:38',boss:'Skypetal',color:'skypetal'},{time:'15:06',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:33',boss:'Frostscale',color:'frostscale'},{time:'17:58',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:33',boss:'Skypetal',color:'skypetal'},{time:'21:07',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:39',boss:'Skypetal',color:'skypetal'}],
-  6: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:26',boss:'Skypetal',color:'skypetal'},{time:'2:53',boss:'Frostscale',color:'frostscale'},{time:'4:19',boss:'Primeval',color:'primeval'},{time:'5:46',boss:'Primeval',color:'primeval'},{time:'7:13',boss:'Frostscale',color:'frostscale'},{time:'8:40',boss:'Frostscale',color:'frostscale'},{time:'10:05',boss:'Frostscale',color:'frostscale'},{time:'11:37',boss:'Primeval',color:'primeval'},{time:'13:04',boss:'Skypetal',color:'skypetal'},{time:'14:38',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:03',boss:'Frostscale',color:'frostscale'},{time:'17:36',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:10',boss:'Primeval',color:'primeval'},{time:'20:37',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:10',boss:'Skypetal',color:'skypetal'},{time:'23:44',boss:'Skypetal',color:'skypetal'}],
-  0: [{time:'0:55',boss:'Primeval',color:'primeval'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'2:28',boss:'Primeval',color:'primeval'},{time:'4:00',boss:'Frostscale',color:'frostscale'},{time:'5:35',boss:'Skypetal',color:'skypetal'},{time:'7:07',boss:'Frostscale',color:'frostscale'},{time:'8:33',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Skypetal',color:'skypetal'},{time:'11:26',boss:'Frostscale',color:'frostscale'},{time:'12:52',boss:'Skypetal',color:'skypetal'},{time:'14:21',boss:'Skypetal',color:'skypetal'},{time:'15:51',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:16',boss:'Frostscale',color:'frostscale'},{time:'18:44',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:17',boss:'Primeval',color:'primeval'},{time:'21:42',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:16',boss:'Skypetal',color:'skypetal'}]
-};
-
-let selectedDay = 'today';
-let notifiedBosses = {};
 
 function getCurrentBossData() {
-  switch(selectedRegion) {
-    case 'silverfrost': return silverfrostData;
-    case 'moonwater': return moonwaterData;
-    case 'rituals': return ritualsData;
-    default: return silverfrostData;
-  }
-}
-
-function getSpawnTimesForDay(dayIndex) {
-  const currentData = getCurrentBossData();
-  if (!currentData[dayIndex]) return [];
-  const times = currentData[dayIndex].map(boss => boss.time);
-  return [...new Set(times)].sort();
-}
-
-// Region switching
-document.querySelectorAll('[data-region]').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('[data-region]').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    selectedRegion = this.dataset.region;
-    
-    const titles = {
-      silverfrost: 'Silverfrost Boss Schedule',
-      moonwater: 'Moonwater Boss Schedule',
-      rituals: 'Rituals Schedule'
-    };
-    document.getElementById('bossScheduleTitle').textContent = titles[selectedRegion];
-    renderBosses();
-  });
-});
-
-function formatCountdown(ms) {
-  if (ms <= 0) {
-    return selectedRegion === 'rituals' ? 'Done' : 'Dead';
-  }
-  const seconds = Math.floor(ms / 1000);
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
-  return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-}
-
-function renderBosses() {
-  const serverTime = getServerTime();
-  const currentDay = serverTime.getDay();
-  const displayDay = selectedDay === 'today' ? currentDay : parseInt(selectedDay);
-  const currentData = getCurrentBossData();
-  
-  const bosses = currentData[displayDay].map(boss => {
-    const timeUntil = getTimeUntilSpawn(boss.time, displayDay);
-    const localSpawnTime = new Date(Date.now() + timeUntil);
-    return {
-      boss: boss.boss,
-      color: boss.color,
-      time: boss.time,
-      dayIndex: displayDay,
-      timeUntil: timeUntil,
-      countdown: formatCountdown(timeUntil),
-      localSpawnTime: localSpawnTime
-    };
-  });
-  
-  let filteredBosses = bosses;
-  if (selectedDay === 'today') {
-    filteredBosses = bosses;
-  }
-  
-  filteredBosses.sort((a, b) => a.timeUntil - b.timeUntil);
-  
-  const table = document.getElementById('bossTable');
-  table.innerHTML = '';
-  
-  if (filteredBosses.length === 0) {
-    const row = document.createElement('tr');
-    row.innerHTML = '<td colspan="4" style="text-align: center; color: #8b949e; padding: 2rem;">No bosses scheduled for this day</td>';
-    table.appendChild(row);
-    return;
-  }
-  
-  filteredBosses.forEach(boss => {
-    const row = document.createElement('tr');
-    const statusClass = boss.timeUntil <= 0 ? 'spawned' : boss.color;
-    row.innerHTML = `
-      <td><span class="boss-name ${boss.color}">${boss.boss}</span></td>
-      <td><span class="countdown ${statusClass}">${boss.countdown}</span></td>
-      <td>${boss.time}</td>
-      <td>${boss.localSpawnTime.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}</td>
-    `;
-    table.appendChild(row);
-  });
-}
-  const defaults = {
-    enableNotifications: false,
-    notificationMinutes: '5',
-    soundEnabled: false
-  };
-  try {
-    const saved = window.savedSettings || {};
-    if (saved.enableNotifications !== undefined) defaults.enableNotifications = saved.enableNotifications;
-    if (saved.notificationMinutes !== undefined) defaults.notificationMinutes = saved.notificationMinutes;
-    if (saved.soundEnabled !== undefined) defaults.soundEnabled = saved.soundEnabled;
-    if (saved.notifiedBosses) notifiedBosses = saved.notifiedBosses;
-  } catch (e) {
-    console.log('No previous settings found');
-  }
-  return defaults;
-}
-
-function saveSettings() {
-  const settings = {
-    enableNotifications: document.getElementById('enableNotifications').checked,
-    notificationMinutes: document.getElementById('notificationMinutes').value,
-    soundEnabled: document.getElementById('soundEnabled').checked,
-    notifiedBosses: notifiedBosses,
-    lastSaved: new Date().toISOString()
-  };
-  window.savedSettings = settings;
-  const status = document.getElementById('saveStatus');
-  status.classList.add('show');
-  setTimeout(() => status.classList.remove('show'), 3000);
-}
-
-function applySettings(settings) {
-  document.getElementById('enableNotifications').checked = settings.enableNotifications;
-  document.getElementById('notificationMinutes').value = settings.notificationMinutes;
-  document.getElementById('soundEnabled').checked = settings.soundEnabled;
-}
-
-function loadSettings() {
-  const now = Date.now();
-  const twoHours = 2 * 60 * 60 * 1000;
-  Object.keys(notifiedBosses).forEach(key => {
-    if (notifiedBosses[key] && (now - notifiedBosses[key]) > twoHours) {
-      delete notifiedBosses[key];
-    }
-  });
+  if (selectedRegion === 'silverfrost') return silverfrostData;
+  if (selectedRegion === 'moonwater') return moonwaterData;
+  if (selectedRegion === 'rituals') return ritualsData;
+  return silverfrostData;
 }
 
 function getServerTime() {
@@ -230,7 +86,9 @@ function getTimeUntilSpawn(timeStr, targetDay) {
 }
 
 function formatCountdown(ms) {
-  if (ms <= 0) return 'Dead';
+  if (ms <= 0) {
+    return selectedRegion === 'rituals' ? 'Done' : 'Dead';
+  }
   const seconds = Math.floor(ms / 1000);
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -242,7 +100,9 @@ function renderBosses() {
   const serverTime = getServerTime();
   const currentDay = serverTime.getDay();
   const displayDay = selectedDay === 'today' ? currentDay : parseInt(selectedDay);
-  const bosses = bossData[displayDay].map(boss => {
+  const currentData = getCurrentBossData();
+  
+  const bosses = currentData[displayDay].map(boss => {
     const timeUntil = getTimeUntilSpawn(boss.time, displayDay);
     const localSpawnTime = new Date(Date.now() + timeUntil);
     return {
@@ -256,22 +116,24 @@ function renderBosses() {
     };
   });
   
-  let filteredBosses = bosses;
-  if (selectedDay === 'today') {
-    filteredBosses = bosses.filter(b => b.timeUntil <= 24 * 60 * 60 * 1000);
-  }
-  
-  filteredBosses.sort((a, b) => a.timeUntil - b.timeUntil);
+  bosses.sort((a, b) => a.timeUntil - b.timeUntil);
   
   const table = document.getElementById('bossTable');
   table.innerHTML = '';
   
-  filteredBosses.forEach(boss => {
+  if (bosses.length === 0) {
     const row = document.createElement('tr');
-    const colorClass = boss.timeUntil <= 0 ? 'dead' : boss.color;
+    row.innerHTML = '<td colspan="4" style="text-align:center;color:#8b949e;padding:2rem">No bosses scheduled for this day</td>';
+    table.appendChild(row);
+    return;
+  }
+  
+  bosses.forEach(boss => {
+    const row = document.createElement('tr');
+    const statusClass = boss.timeUntil <= 0 ? (selectedRegion === 'rituals' ? 'done' : 'dead') : boss.color;
     row.innerHTML = `
       <td><span class="boss-name ${boss.color}">${boss.boss}</span></td>
-      <td><span class="countdown ${colorClass}">${boss.countdown}</span></td>
+      <td><span class="countdown ${statusClass}">${boss.countdown}</span></td>
       <td>${boss.time}</td>
       <td>${boss.localSpawnTime.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}</td>
     `;
@@ -284,84 +146,70 @@ function updateClock() {
   document.getElementById('serverClock').textContent = 'Server Time: ' + serverTime.toLocaleTimeString('en-US', { hour12: false });
 }
 
-function cleanOldNotifications() {
-  const enabled = document.getElementById('enableNotifications').checked;
-  if (!enabled) return;
-  
-  const minutesBefore = parseInt(document.getElementById('notificationMinutes').value);
-  const soundEnabled = document.getElementById('soundEnabled').checked;
-  
-  cleanOldNotifications();
-  
-  Object.keys(bossData).forEach(day => {
-    bossData[day].forEach(boss => {
-      const timeUntil = getTimeUntilSpawn(boss.time, parseInt(day));
-      const secondsUntil = Math.floor(timeUntil / 1000);
-      const spawnTimestamp = Date.now() + timeUntil;
-      const notificationId = boss.boss + '_' + boss.time + '_day' + day + '_' + Math.floor(spawnTimestamp / 60000);
-      
-      const minSeconds = (minutesBefore * 60) - 30;
-      const maxSeconds = (minutesBefore * 60) + 30;
-      
-      if (secondsUntil >= minSeconds && secondsUntil <= maxSeconds && !notifiedBosses[notificationId]) {
-        notifiedBosses[notificationId] = Date.now();
-        showNotification(boss.boss, boss.time, minutesBefore, soundEnabled);
-        if (window.savedSettings) {
-          window.savedSettings.notifiedBosses = notifiedBosses;
-        }
-      }
-    });
+// Region switching
+document.querySelectorAll('[data-region]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-region]').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    selectedRegion = this.dataset.region;
+    
+    const titles = {
+      silverfrost: 'Silverfrost Boss Schedule',
+      moonwater: 'Moonwater Boss Schedule',
+      rituals: 'Rituals Schedule'
+    };
+    document.getElementById('bossScheduleTitle').textContent = titles[selectedRegion];
+    renderBosses();
   });
+});
+
+// Day switching
+document.getElementById('dayFilter').addEventListener('click', function(e) {
+  if (e.target.classList.contains('day-btn')) {
+    document.querySelectorAll('#dayFilter .day-btn').forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+    selectedDay = e.target.dataset.day;
+    renderBosses();
+  }
+});
+
+// Notification functions
+function loadSettings() {
+  const defaults = {
+    enableNotifications: false,
+    notificationMinutes: '5',
+    soundEnabled: false
+  };
+  try {
+    const saved = window.savedSettings || {};
+    if (saved.enableNotifications !== undefined) defaults.enableNotifications = saved.enableNotifications;
+    if (saved.notificationMinutes !== undefined) defaults.notificationMinutes = saved.notificationMinutes;
+    if (saved.soundEnabled !== undefined) defaults.soundEnabled = saved.soundEnabled;
+    if (saved.notifiedBosses) notifiedBosses = saved.notifiedBosses;
+  } catch (e) {
+    console.log('No previous settings found');
+  }
+  return defaults;
 }
 
-function checkNotifications() {
-  const enabled = document.getElementById('enableNotifications').checked;
-  if (!enabled) return;
-  
-  const minutesBefore = parseInt(document.getElementById('notificationMinutes').value);
-  const soundEnabled = document.getElementById('soundEnabled').checked;
-  
-  cleanOldNotifications();
-  
-  const currentData = getCurrentBossData();
-  Object.keys(currentData).forEach(day => {
-    currentData[day].forEach(boss => {
-      const timeUntil = getTimeUntilSpawn(boss.time, parseInt(day));
-      const secondsUntil = Math.floor(timeUntil / 1000);
-      const spawnTimestamp = Date.now() + timeUntil;
-      const notificationId = boss.boss + '_' + boss.time + '_day' + day + '_' + Math.floor(spawnTimestamp / 60000);
-      
-      const minSeconds = (minutesBefore * 60) - 30;
-      const maxSeconds = (minutesBefore * 60) + 30;
-      
-      if (secondsUntil >= minSeconds && secondsUntil <= maxSeconds && !notifiedBosses[notificationId]) {
-        notifiedBosses[notificationId] = Date.now();
-        showNotification(boss.boss, boss.time, minutesBefore, soundEnabled);
-        if (window.savedSettings) {
-          window.savedSettings.notifiedBosses = notifiedBosses;
-        }
-      }
-    });
-  });
+function saveSettings() {
+  const settings = {
+    enableNotifications: document.getElementById('enableNotifications').checked,
+    notificationMinutes: document.getElementById('notificationMinutes').value,
+    soundEnabled: document.getElementById('soundEnabled').checked,
+    notifiedBosses: notifiedBosses,
+    lastSaved: new Date().toISOString()
+  };
+  window.savedSettings = settings;
+  const status = document.getElementById('saveStatus');
+  status.classList.add('show');
+  setTimeout(() => status.classList.remove('show'), 3000);
 }
-  if (!('Notification' in window)) return;
-  
-  if (Notification.permission === 'granted') {
-    const notification = new Notification('🎮 Boss Spawn Alert!', {
-      body: `${bossName} will spawn in ${minutes} minutes at ${time} (Server Time)!`,
-      icon: '🎮',
-      requireInteraction: true,
-      tag: bossName + '_' + time
-    });
-    if (playSound) playNotificationSound();
-    setTimeout(() => notification.close(), 10000);
-  } else if (Notification.permission !== 'denied') {
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        showNotification(bossName, time, minutes, playSound);
-      }
-    });
-  }
+
+function applySettings(settings) {
+  document.getElementById('enableNotifications').checked = settings.enableNotifications;
+  document.getElementById('notificationMinutes').value = settings.notificationMinutes;
+  document.getElementById('soundEnabled').checked = settings.soundEnabled;
 }
 
 function playNotificationSound() {
@@ -391,7 +239,7 @@ function testNotification() {
   if (Notification.permission === 'granted') {
     const soundEnabled = document.getElementById('soundEnabled').checked;
     const notification = new Notification('🎮 Boss Tracker Test', {
-      body: 'Notifications are working correctly! You will receive alerts like this one.',
+      body: 'Notifications are working correctly!',
       icon: '🎮',
       requireInteraction: false
     });
@@ -402,26 +250,16 @@ function testNotification() {
       if (permission === 'granted') {
         testNotification();
       } else {
-        alert('Please allow notifications in your browser settings to use this feature.');
+        alert('Please allow notifications in your browser settings.');
       }
     });
   }
 }
 
-// Boss Tracker Event Listeners
-document.getElementById('dayFilter').addEventListener('click', function(e) {
-  if (e.target.classList.contains('day-btn')) {
-    document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
-    selectedDay = e.target.dataset.day;
-    renderBosses();
-  }
-});
-
 document.getElementById('testNotification').addEventListener('click', testNotification);
 document.getElementById('saveSettings').addEventListener('click', saveSettings);
 
-// Initialize Boss Tracker
+// Initialize
 const savedSettings = loadSettings();
 applySettings(savedSettings);
 document.getElementById('userTimezone').textContent = getUserTimezone();
@@ -430,404 +268,4 @@ updateClock();
 setInterval(() => {
   renderBosses();
   updateClock();
-  checkNotifications();
 }, 1000);
-
-// ============= QUEST TRACKER CODE =============
-const questData = {
-  'frostscale': [
-    { name: 'Shifting Beneath The Snow', gold: 0, silver: 64, copper: 80, xp: 4800 },
-    { name: 'Slavery in the North', gold: 0, silver: 59, copper: 10, xp: 3000 },
-    { name: 'Two Tribes, Three Chiefs', gold: 0, silver: 57, copper: 60, xp: 4800 }
-  ],
-  'msp': [
-    { name: 'Guardian of the Moon', gold: 0, silver: 50, copper: 0, xp: 2200 }
-  ],
-  'ssp': [
-    { name: 'Turning the Tide', gold: 0, silver: 67, copper: 0, xp: 6000 },
-    { name: 'Battle Master', gold: 0, silver: 64, copper: 0, xp: 6000 },
-    { name: 'Fierce Clash Upon the Plains', gold: 0, silver: 64, copper: 0, xp: 5200 },
-    { name: 'Heal the Wounded', gold: 0, silver: 40, copper: 0, xp: 4250 },
-    { name: 'Herbin\' Warfare', gold: 0, silver: 40, copper: 0, xp: 3700 },
-    { name: 'The One Who Controls the Soulstone', gold: 0, silver: 40, copper: 0, xp: 2600 }
-  ],
-  'mushin': [
-    { name: 'Monsters and Mayhem', gold: 0, silver: 59, copper: 0, xp: 2500, note: '(69s - 10s Antidote)' },
-    { name: 'The Final Training', gold: 0, silver: 25, copper: 0, xp: 2500, note: '(75s - 50s Gem)' }
-  ],
-  'fieldboss': [
-    { name: 'Kaishin\'s Ambition', gold: 0, silver: 85, copper: 0, xp: 5500 }
-  ],
-  'blues': [
-    { name: 'Same Old Song', gold: 1, silver: 15, copper: 0, xp: 4900 },
-    { name: 'Snowed In', gold: 1, silver: 15, copper: 0, xp: 4900 },
-    { name: 'Jailhouse Rock', gold: 1, silver: 15, copper: 0, xp: 4900 }
-  ],
-  'silverfrost': [
-    { name: 'The Gatecrasher', gold: 1, silver: 70, copper: 0, xp: 6200 },
-    { name: 'Be Ido Rides Again', gold: 1, silver: 70, copper: 0, xp: 6200 },
-    { name: 'Asura\'s Return', gold: 1, silver: 70, copper: 0, xp: 6700 },
-    { name: 'Two Shadows', gold: 1, silver: 70, copper: 0, xp: 6700 }
-  ],
-  'moonwater': [
-    { name: 'Moonwater Plains Evildoer Sweep', gold: 1, silver: 25, copper: 0, xp: 5200 },
-    { name: 'Moonwater Plains Darkness Sweep', gold: 0, silver: 53, copper: 0, xp: 4400 },
-    { name: 'Gale of Darkness', gold: 1, silver: 25, copper: 0, xp: 6100 },
-    { name: 'Wailing Souls', gold: 1, silver: 25, copper: 0, xp: 6100 }
-  ]
-};
-
-let completedQuests = {};
-
-function loadProgress() {
-  try {
-    const saved = window.questProgress;
-    if (saved) {
-      completedQuests = saved;
-    }
-  } catch (e) {
-    console.log('No saved progress found');
-  }
-}
-
-function saveProgress() {
-  window.questProgress = completedQuests;
-}
-
-function formatGold(gold, silver, copper) {
-  let parts = [];
-  if (gold > 0) parts.push(gold + 'g');
-  if (silver > 0) parts.push(silver + 's');
-  if (copper > 0) parts.push(copper + 'c');
-  return parts.length > 0 ? parts.join(' ') : '0g';
-}
-
-function calculateTotals() {
-  let earnedGold = 0, earnedSilver = 0, earnedCopper = 0, earnedXP = 0;
-  let lostGold = 0, lostSilver = 0, lostCopper = 0, lostXP = 0;
-  let completed = 0, total = 0;
-
-  Object.keys(questData).forEach(section => {
-    questData[section].forEach(quest => {
-      total++;
-      const questId = section + '_' + quest.name;
-      if (completedQuests[questId]) {
-        completed++;
-        earnedGold += quest.gold;
-        earnedSilver += quest.silver;
-        earnedCopper += quest.copper;
-        earnedXP += quest.xp;
-      } else {
-        lostGold += quest.gold;
-        lostSilver += quest.silver;
-        lostCopper += quest.copper;
-        lostXP += quest.xp;
-      }
-    });
-  });
-
-  earnedSilver += Math.floor(earnedCopper / 100);
-  earnedCopper = earnedCopper % 100;
-  earnedGold += Math.floor(earnedSilver / 100);
-  earnedSilver = earnedSilver % 100;
-
-  lostSilver += Math.floor(lostCopper / 100);
-  lostCopper = lostCopper % 100;
-  lostGold += Math.floor(lostSilver / 100);
-  lostSilver = lostSilver % 100;
-
-  const totalGold = earnedGold + lostGold;
-  const totalSilver = earnedSilver + lostSilver;
-  const totalCopper = earnedCopper + lostCopper;
-  const totalXP = earnedXP + lostXP;
-
-  document.getElementById('completedCount').textContent = completed + '/' + total;
-  document.getElementById('progressBar').style.width = ((completed / total) * 100) + '%';
-  document.getElementById('goldEarned').textContent = formatGold(earnedGold, earnedSilver, earnedCopper);
-  document.getElementById('goldLost').textContent = formatGold(lostGold, lostSilver, lostCopper);
-  document.getElementById('xpEarned').textContent = earnedXP.toLocaleString();
-  document.getElementById('xpLost').textContent = lostXP.toLocaleString();
-  document.getElementById('totalValue').textContent = formatGold(totalGold, totalSilver, totalCopper);
-  document.getElementById('totalXP').textContent = totalXP.toLocaleString();
-}
-
-function renderQuests() {
-  Object.keys(questData).forEach(section => {
-    const container = document.getElementById(section + '-quests');
-    container.innerHTML = '';
-    
-    questData[section].forEach(quest => {
-      const questId = section + '_' + quest.name;
-      const isCompleted = completedQuests[questId] || false;
-      
-      const questItem = document.createElement('div');
-      questItem.className = 'quest-item' + (isCompleted ? ' completed' : '');
-      
-      questItem.innerHTML = `
-        <div class="quest-left">
-          <input type="checkbox" class="quest-checkbox" data-quest="${questId}" ${isCompleted ? 'checked' : ''}>
-          <span class="quest-name">${quest.name}${quest.note ? ' <span style="color: #8b949e; font-size: 0.85rem;">' + quest.note + '</span>' : ''}</span>
-        </div>
-        <div class="quest-rewards">
-          <div class="reward-item">
-            <div class="reward-label">Gold</div>
-            <div class="reward-value">${formatGold(quest.gold, quest.silver, quest.copper)}</div>
-          </div>
-          <div class="reward-item">
-            <div class="reward-label">XP</div>
-            <div class="reward-value xp">${quest.xp.toLocaleString()}</div>
-          </div>
-        </div>
-      `;
-      
-      container.appendChild(questItem);
-      
-      questItem.addEventListener('click', function(e) {
-        if (e.target.type !== 'checkbox') {
-          const checkbox = questItem.querySelector('.quest-checkbox');
-          checkbox.checked = !checkbox.checked;
-          toggleQuest(questId, checkbox.checked);
-        }
-      });
-      
-      const checkbox = questItem.querySelector('.quest-checkbox');
-      checkbox.addEventListener('change', function(e) {
-        e.stopPropagation();
-        toggleQuest(questId, this.checked);
-      });
-    });
-  });
-}
-
-function toggleQuest(questId, isCompleted) {
-  if (isCompleted) {
-    completedQuests[questId] = true;
-  } else {
-    delete completedQuests[questId];
-  }
-  saveProgress();
-  calculateTotals();
-  renderQuests();
-}
-
-document.getElementById('resetAll').addEventListener('click', function() {
-  if (confirm('Are you sure you want to reset all quests?')) {
-    completedQuests = {};
-    saveProgress();
-    calculateTotals();
-    renderQuests();
-  }
-});
-
-document.getElementById('completeAll').addEventListener('click', function() {
-  Object.keys(questData).forEach(section => {
-    questData[section].forEach(quest => {
-      const questId = section + '_' + quest.name;
-      completedQuests[questId] = true;
-    });
-  });
-  saveProgress();
-  calculateTotals();
-  renderQuests();
-});
-
-// Initialize Quest Tracker
-loadProgress();
-renderQuests();
-calculateTotals();
-
-// ============= BOSS SPAWN REPORT SYSTEM =============
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your Google Apps Script Web App URL
-
-// Get all spawn times for a specific day
-function getSpawnTimesForDay(dayIndex) {
-  if (!bossData[dayIndex]) return [];
-  
-  const times = bossData[dayIndex].map(boss => boss.time);
-  // Remove duplicates and sort
-  const uniqueTimes = [...new Set(times)].sort();
-  
-  return uniqueTimes;
-}
-
-// Update spawn time dropdown when day changes
-document.getElementById('reportDay').addEventListener('change', function() {
-  const dayIndex = parseInt(this.value);
-  const timeSelect = document.getElementById('reportTime');
-  const customSection = document.getElementById('customTimeSection');
-  
-  // Clear existing options
-  timeSelect.innerHTML = '<option value="">Select spawn time...</option>';
-  
-  if (dayIndex >= 0) {
-    // Get spawn times for selected day
-    const spawnTimes = getSpawnTimesForDay(dayIndex);
-    
-    // Add predefined times
-    spawnTimes.forEach(time => {
-      const option = document.createElement('option');
-      option.value = time;
-      option.textContent = time;
-      timeSelect.appendChild(option);
-    });
-    
-    // Add "Custom Time" option
-    const customOption = document.createElement('option');
-    customOption.value = 'custom';
-    customOption.textContent = '➕ Add New Time (Custom)';
-    customOption.style.fontWeight = 'bold';
-    customOption.style.color = '#58a6ff';
-    timeSelect.appendChild(customOption);
-  }
-  
-  // Reset custom time section
-  customSection.style.display = 'none';
-  document.getElementById('customTime').value = '';
-});
-
-// Show/hide custom time input
-document.getElementById('reportTime').addEventListener('change', function() {
-  const customSection = document.getElementById('customTimeSection');
-  const customTimeInput = document.getElementById('customTime');
-  
-  if (this.value === 'custom') {
-    customSection.style.display = 'block';
-    customTimeInput.required = true;
-    // Auto-focus and open time picker
-    setTimeout(() => {
-      customTimeInput.focus();
-      customTimeInput.showPicker();
-    }, 100);
-  } else {
-    customSection.style.display = 'none';
-    customTimeInput.required = false;
-    customTimeInput.value = '';
-  }
-});
-
-// Open time picker when clicking anywhere on the input field
-document.getElementById('customTime').addEventListener('click', function() {
-  this.showPicker();
-});
-
-// Load recent reports from storage
-function loadRecentReports() {
-  try {
-    const reports = window.bossReports || [];
-    renderReports(reports);
-  } catch (e) {
-    console.log('No saved reports found');
-  }
-}
-
-// Render reports table
-function renderReports(reports) {
-  const table = document.getElementById('reportsTable');
-  
-  if (reports.length === 0) {
-    table.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #8b949e; padding: 2rem;">No reports yet. Be the first to contribute!</td></tr>';
-    return;
-  }
-  
-  table.innerHTML = '';
-  
-  // Show last 10 reports, most recent first
-  reports.slice(-10).reverse().forEach(report => {
-    const row = document.createElement('tr');
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const bossColors = {
-      'Primeval': 'primeval',
-      'Frostscale': 'frostscale',
-      'Skypetal': 'skypetal'
-    };
-    
-    // Add badge for custom times
-    const timeDisplay = report.isCustomTime 
-      ? `<span style="font-family: monospace; font-weight: bold;">${report.time}</span> <span style="background: #58a6ff; color: #0d1117; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-left: 4px;">NEW</span>`
-      : `<span style="font-family: monospace; font-weight: bold;">${report.time}</span>`;
-    
-    row.innerHTML = `
-      <td>${new Date(report.timestamp).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
-      <td>${dayNames[report.day]}</td>
-      <td>${timeDisplay}</td>
-      <td><span class="boss-name ${bossColors[report.boss]}">${report.boss}</span></td>
-      <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${report.notes || '-'}</td>
-    `;
-    table.appendChild(row);
-  });
-}
-
-// Handle form submission
-document.getElementById('reportForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  
-  const day = document.getElementById('reportDay').value;
-  let time = document.getElementById('reportTime').value;
-  const boss = document.getElementById('reportBoss').value;
-  const notes = document.getElementById('reportNotes').value;
-  
-  // If custom time is selected, use the custom time input
-  if (time === 'custom') {
-    const customTime = document.getElementById('customTime').value;
-    if (!customTime) {
-      alert('Please enter a custom time');
-      return;
-    }
-    time = customTime;
-  }
-  
-  if (!day || !time || !boss) {
-    alert('Please fill in all required fields');
-    return;
-  }
-  
-  const report = {
-    timestamp: new Date().toISOString(),
-    day: parseInt(day),
-    time: time,
-    boss: boss,
-    notes: notes,
-    isCustomTime: document.getElementById('reportTime').value === 'custom'
-  };
-  
-  // Save locally first
-  const reports = window.bossReports || [];
-  reports.push(report);
-  window.bossReports = reports;
-  
-  // Update table
-  renderReports(reports);
-  
-  // Send to Google Sheets
-  try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(report)
-    });
-    
-    // Show success message
-    const statusEl = document.getElementById('reportStatus');
-    statusEl.classList.add('show');
-    setTimeout(() => statusEl.classList.remove('show'), 3000);
-    
-    // Reset form
-    document.getElementById('reportForm').reset();
-    document.getElementById('customTimeSection').style.display = 'none';
-    document.getElementById('reportTime').innerHTML = '<option value="">Select spawn time...</option>';
-    
-  } catch (error) {
-    console.error('Error submitting report:', error);
-    
-    // Show error message
-    const errorEl = document.getElementById('reportError');
-    errorEl.classList.add('show');
-    setTimeout(() => errorEl.classList.remove('show'), 3000);
-  }
-});
-
-// Initialize reports on page load
-loadRecentReports();
