@@ -12,7 +12,7 @@
 <div class="container">
 <h1>🎮 Boss & Quest Tracker</h1>
 <div class="nav-tabs">
-<button class="nav-tab active" data-tab="boss">📍 Boss Tracker</button>
+<button class="nav-tab active" data-tab="boss">🔍 Boss Tracker</button>
 <button class="nav-tab" data-tab="quest">✅ Quest Tracker</button>
 <button class="nav-tab" data-tab="report">📝 Report Boss Spawn</button>
 </div>
@@ -44,7 +44,7 @@
 </div>
 <div class="card">
 <h3 id="bossScheduleTitle">Silverfrost Boss Schedule</h3>
-<div style="overflow-x:auto"><table><thead><tr><th>📍 Boss Name</th><th>Time Until Spawn</th><th>Server Time</th><th>Next Spawn (Your Time)</th></tr></thead><tbody id="bossTable"></tbody></table></div>
+<div style="overflow-x:auto"><table><thead><tr><th>🔍 Boss Name</th><th>Time Until Spawn</th><th>Server Time</th><th>Next Spawn (Your Time)</th></tr></thead><tbody id="bossTable"></tbody></table></div>
 </div>
 <div class="card">
 <h3>⚙️ Notification Settings</h3>
@@ -59,6 +59,15 @@
 </div>
 </div>
 <div id="quest-tab" class="tab-content">
+<div class="card" style="background:rgba(255,140,0,0.15);border-color:#ff8c00;margin-bottom:2rem">
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+<span style="font-size:3rem">🚧</span>
+<div>
+<h3 style="color:#ff8c00;margin:0;border:none;padding:0">Em Construção</h3>
+<p style="color:#ff8c00;margin:0.5rem 0 0 0;font-weight:500">O Quest Tracker está atualmente em desenvolvimento. Esta funcionalidade estará disponível em breve!</p>
+</div>
+</div>
+</div>
 <div class="card">
 <h3>📊 Progress Overview</h3>
 <div class="summary-grid">
@@ -71,7 +80,7 @@
 </div>
 <div class="button-group">
 <button class="btn btn-complete" id="completeAll">✓ Complete All</button>
-<button class="btn btn-reset" id="resetAll">↺ Reset All</button>
+<button class="btn btn-reset" id="resetAll">↻ Reset All</button>
 </div>
 </div>
 <div class="card">
