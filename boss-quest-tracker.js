@@ -72,16 +72,22 @@ function parseTime(timeStr, daysOffset) {
   return targetTime;
 }
 
-function getTimeUntilSpawn(timeStr, targetDay) {
+function getTimeUntilSpawn(timeStr, targetDay, originalSelectedDay) {
   const serverTime = getServerTime();
   const currentDay = serverTime.getDay();
   let daysUntil = targetDay - currentDay;
   if (daysUntil < 0) daysUntil += 7;
   const spawnTime = parseTime(timeStr, daysUntil);
   const timeUntil = spawnTime - serverTime;
+
+
   if (timeUntil < 0 && daysUntil === 0) {
-    return parseTime(timeStr, 7) - serverTime;
+    
+    if (originalSelectedDay !== 'today') {
+      return parseTime(timeStr, 7) - serverTime;
+    }
   }
+
   return timeUntil;
 }
 
@@ -103,7 +109,7 @@ function renderBosses() {
   const currentData = getCurrentBossData();
   
   const bosses = currentData[displayDay].map(boss => {
-    const timeUntil = getTimeUntilSpawn(boss.time, displayDay);
+    const timeUntil = getTimeUntilSpawn(boss.time, displayDay, selectedDay);
     const localSpawnTime = new Date(Date.now() + timeUntil);
     return {
       boss: boss.boss,
