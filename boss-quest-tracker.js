@@ -288,15 +288,33 @@ function toggleRegionSettings(region, enabled) {
 
 // Region notification toggles
 document.getElementById('notifySilverfrost').addEventListener('change', function() {
-  toggleRegionSettings('silverfrost', this.checked);
+  const isChecked = this.checked;
+  toggleRegionSettings('silverfrost', isChecked);
+  if (isChecked) {
+    document.getElementById('silverfrost-primeval').checked = true;
+    document.getElementById('silverfrost-frostscale').checked = true;
+    document.getElementById('silverfrost-skypetal').checked = true;
+    document.getElementById('silverfrost-golden').checked = true;
+  }
 });
 
 document.getElementById('notifyMoonwater').addEventListener('change', function() {
-  toggleRegionSettings('moonwater', this.checked);
+  const isChecked = this.checked;
+  toggleRegionSettings('moonwater', isChecked);
+  if (isChecked) {
+    document.getElementById('moonwater-kaari').checked = true;
+    document.getElementById('moonwater-profane').checked = true;
+    document.getElementById('moonwater-lycan').checked = true;
+    document.getElementById('moonwater-safiji').checked = true;
+  }
 });
 
 document.getElementById('notifyRituals').addEventListener('change', function() {
-  toggleRegionSettings('rituals', this.checked);
+  const isChecked = this.checked;
+  toggleRegionSettings('rituals', isChecked);
+  if (isChecked) {
+    document.getElementById('rituals-all').checked = true;
+  }
 });
 
 function playNotificationSound() {
