@@ -184,13 +184,37 @@ function loadSettings() {
   const defaults = {
     enableNotifications: false,
     notificationMinutes: '5',
-    soundEnabled: false
+    soundEnabled: false,
+    notifySilverfrost: true,
+    notifyMoonwater: true,
+    notifyRituals: true,
+    silverfrostBosses: {
+      primeval: true,
+      frostscale: true,
+      skypetal: true,
+      golden: true
+    },
+    moonwaterBosses: {
+      kaari: true,
+      profane: true,
+      lycan: true,
+      safiji: true
+    },
+    ritualsBosses: {
+      all: true
+    }
   };
   try {
     const saved = window.savedSettings || {};
     if (saved.enableNotifications !== undefined) defaults.enableNotifications = saved.enableNotifications;
     if (saved.notificationMinutes !== undefined) defaults.notificationMinutes = saved.notificationMinutes;
     if (saved.soundEnabled !== undefined) defaults.soundEnabled = saved.soundEnabled;
+    if (saved.notifySilverfrost !== undefined) defaults.notifySilverfrost = saved.notifySilverfrost;
+    if (saved.notifyMoonwater !== undefined) defaults.notifyMoonwater = saved.notifyMoonwater;
+    if (saved.notifyRituals !== undefined) defaults.notifyRituals = saved.notifyRituals;
+    if (saved.silverfrostBosses) defaults.silverfrostBosses = saved.silverfrostBosses;
+    if (saved.moonwaterBosses) defaults.moonwaterBosses = saved.moonwaterBosses;
+    if (saved.ritualsBosses) defaults.ritualsBosses = saved.ritualsBosses;
     if (saved.notifiedBosses) notifiedBosses = saved.notifiedBosses;
   } catch (e) {
     console.log('No previous settings found');
@@ -203,6 +227,24 @@ function saveSettings() {
     enableNotifications: document.getElementById('enableNotifications').checked,
     notificationMinutes: document.getElementById('notificationMinutes').value,
     soundEnabled: document.getElementById('soundEnabled').checked,
+    notifySilverfrost: document.getElementById('notifySilverfrost').checked,
+    notifyMoonwater: document.getElementById('notifyMoonwater').checked,
+    notifyRituals: document.getElementById('notifyRituals').checked,
+    silverfrostBosses: {
+      primeval: document.getElementById('silverfrost-primeval').checked,
+      frostscale: document.getElementById('silverfrost-frostscale').checked,
+      skypetal: document.getElementById('silverfrost-skypetal').checked,
+      golden: document.getElementById('silverfrost-golden').checked
+    },
+    moonwaterBosses: {
+      kaari: document.getElementById('moonwater-kaari').checked,
+      profane: document.getElementById('moonwater-profane').checked,
+      lycan: document.getElementById('moonwater-lycan').checked,
+      safiji: document.getElementById('moonwater-safiji').checked
+    },
+    ritualsBosses: {
+      all: document.getElementById('rituals-all').checked
+    },
     notifiedBosses: notifiedBosses,
     lastSaved: new Date().toISOString()
   };
@@ -216,7 +258,46 @@ function applySettings(settings) {
   document.getElementById('enableNotifications').checked = settings.enableNotifications;
   document.getElementById('notificationMinutes').value = settings.notificationMinutes;
   document.getElementById('soundEnabled').checked = settings.soundEnabled;
+  document.getElementById('notifySilverfrost').checked = settings.notifySilverfrost;
+  document.getElementById('notifyMoonwater').checked = settings.notifyMoonwater;
+  document.getElementById('notifyRituals').checked = settings.notifyRituals;
+  
+  document.getElementById('silverfrost-primeval').checked = settings.silverfrostBosses.primeval;
+  document.getElementById('silverfrost-frostscale').checked = settings.silverfrostBosses.frostscale;
+  document.getElementById('silverfrost-skypetal').checked = settings.silverfrostBosses.skypetal;
+  document.getElementById('silverfrost-golden').checked = settings.silverfrostBosses.golden;
+  
+  document.getElementById('moonwater-kaari').checked = settings.moonwaterBosses.kaari;
+  document.getElementById('moonwater-profane').checked = settings.moonwaterBosses.profane;
+  document.getElementById('moonwater-lycan').checked = settings.moonwaterBosses.lycan;
+  document.getElementById('moonwater-safiji').checked = settings.moonwaterBosses.safiji;
+  
+  document.getElementById('rituals-all').checked = settings.ritualsBosses.all;
+  
+  toggleRegionSettings('silverfrost', settings.notifySilverfrost);
+  toggleRegionSettings('moonwater', settings.notifyMoonwater);
+  toggleRegionSettings('rituals', settings.notifyRituals);
 }
+
+function toggleRegionSettings(region, enabled) {
+  const section = document.getElementById(region + '-bosses');
+  if (section) {
+    section.style.display = enabled ? 'flex' : 'none';
+  }
+}
+
+// Region notification toggles
+document.getElementById('notifySilverfrost').addEventListener('change', function() {
+  toggleRegionSettings('silverfrost', this.checked);
+});
+
+document.getElementById('notifyMoonwater').addEventListener('change', function() {
+  toggleRegionSettings('moonwater', this.checked);
+});
+
+document.getElementById('notifyRituals').addEventListener('change', function() {
+  toggleRegionSettings('rituals', this.checked);
+});
 
 function playNotificationSound() {
   try {
