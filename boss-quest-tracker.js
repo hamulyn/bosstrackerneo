@@ -10,11 +10,43 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
 });
 
 // ============= BOSS TRACKER CODE =============
-const bossData = {
-  1: [{time:'0:00',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:25',boss:'Primeval',color:'primeval'},{time:'2:54',boss:'Frostscale',color:'frostscale'},{time:'4:28',boss:'Skypetal',color:'skypetal'},{time:'5:55',boss:'Frostscale',color:'frostscale'},{time:'7:21',boss:'Skypetal',color:'skypetal'},{time:'8:56',boss:'Primeval',color:'primeval'},{time:'10:29',boss:'Primeval',color:'primeval'},{time:'11:59',boss:'Frostscale',color:'frostscale'},{time:'13:25',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'22:00',boss:'Raging Yeti',color:'golden'}],
-  2: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'22:00',boss:'Raging Yeti',color:'golden'}],
-  3: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'4:05',boss:'Frostscale',color:'frostscale'},{time:'5:36',boss:'Frostscale',color:'frostscale'},{time:'7:09',boss:'Frostscale',color:'frostscale'},{time:'8:35',boss:'Skypetal',color:'skypetal'},{time:'10:08',boss:'Frostscale',color:'frostscale'},{time:'11:39',boss:'Frostscale',color:'frostscale'},{time:'13:06',boss:'Frostscale',color:'frostscale'},{time:'14:41',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:07',boss:'Skypetal',color:'skypetal'},{time:'17:34',boss:'Frostscale',color:'frostscale'},{time:'18:59',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:34',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:07',boss:'Skypetal',color:'skypetal'},{time:'23:36',boss:'Skypetal',color:'skypetal'}],
-  4: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:01',boss:'Primeval',color:'primeval'},{time:'2:26',boss:'Primeval',color:'primeval'},{time:'3:58',boss:'Primeval',color:'primeval'},{time:'5:24',boss:'Skypetal',color:'skypetal'},{time:'6:55',boss:'Skypetal',color:'skypetal'},{time:'8:24',boss:'Primeval',color:'primeval'},{time:'9:54',boss:'Primeval',color:'primeval'},{time:'11:25',boss:'Primeval',color:'primeval'},{time:'13:00',boss:'Primeval',color:'primeval'},{time:'14:29',boss:'Skypetal',color:'skypetal'},{time:'15:54',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:25',boss:'Primeval',color:'primeval'},{time:'18:55',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:24',boss:'Frostscale',color:'frostscale'},{time:'21:59',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:25',boss:'Frostscale',color:'frostscale'}],
+// Silverfrost Bosses
+const silverfrostData = {
+  1: [{time:'0:00',boss:'Frostscale',color:'frostscale'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:25',boss:'Primeval',color:'primeval'},{time:'2:54',boss:'Frostscale',color:'frostscale'},{time:'4:28',boss:'Skypetal',color:'skypetal'},{time:'5:55',boss:'Frostscale',color:'frostscale'},{time:'7:21',boss:'Skypetal',color:'skypetal'},{time:'8:56',boss:'Primeval',color:'primeval'},{time:'10:29',boss:'Primeval',color:'primeval'},{time:'11:59',boss:'Frostscale',color:'frostscale'},{time:'13:25',boss:'Frostscale',color:'frostscale'},{time:'14:56',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:24',boss:'Primeval',color:'primeval'},{time:'17:52',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:26',boss:'Skypetal',color:'skypetal'},{time:'20:52',boss:'Primeval',color:'primeval'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:22',boss:'Frostscale',color:'frostscale'},{time:'23:56',boss:'Skypetal',color:'skypetal'}],
+  2: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:02',boss:'Skypetal',color:'skypetal'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'22:00',boss:'Raging Yeti',color:'golden'}],
+  3: [{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:01',boss:'Primeval',color:'primeval'},{time:'2:26',boss:'Primeval',color:'primeval'},{time:'3:58',boss:'Primeval',color:'primeval'},{time:'5:24',boss:'Skypetal',color:'skypetal'},{time:'6:55',boss:'Skypetal',color:'skypetal'},{time:'8:24',boss:'Primeval',color:'primeval'},{time:'8:35',boss:'Skypetal',color:'skypetal'},{time:'9:54',boss:'Primeval',color:'primeval'},{time:'10:08',boss:'Frostscale',color:'frostscale'},{time:'11:25',boss:'Primeval',color:'primeval'},{time:'11:39',boss:'Frostscale',color:'frostscale'},{time:'13:00',boss:'Primeval',color:'primeval'},{time:'13:06',boss:'Frostscale',color:'frostscale'},{time:'14:29',boss:'Skypetal',color:'skypetal'},{time:'14:41',boss:'Primeval',color:'primeval'},{time:'15:54',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:07',boss:'Skypetal',color:'skypetal'},{time:'17:25',boss:'Primeval',color:'primeval'},{time:'17:34',boss:'Frostscale',color:'frostscale'},{time:'18:55',boss:'Skypetal',color:'skypetal'},{time:'18:59',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:24',boss:'Frostscale',color:'frostscale'},{time:'20:34',boss:'Frostscale',color:'frostscale'},{time:'21:59',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:07',boss:'Skypetal',color:'skypetal'},{time:'23:25',boss:'Frostscale',color:'frostscale'},{time:'23:36',boss:'Skypetal',color:'skypetal'}],
+  4: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:32',boss:'Frostscale',color:'frostscale'},{time:'3:04',boss:'Primeval',color:'primeval'},{time:'4:37',boss:'Primeval',color:'primeval'},{time:'6:09',boss:'Primeval',color:'primeval'},{time:'7:35',boss:'Frostscale',color:'frostscale'},{time:'9:06',boss:'Skypetal',color:'skypetal'},{time:'10:37',boss:'Primeval',color:'primeval'},{time:'12:04',boss:'Frostscale',color:'frostscale'},{time:'13:38',boss:'Skypetal',color:'skypetal'},{time:'15:06',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:33',boss:'Frostscale',color:'frostscale'},{time:'17:58',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:33',boss:'Skypetal',color:'skypetal'},{time:'21:07',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:39',boss:'Skypetal',color:'skypetal'}],
+  5: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:26',boss:'Skypetal',color:'skypetal'},{time:'2:53',boss:'Frostscale',color:'frostscale'},{time:'4:19',boss:'Primeval',color:'primeval'},{time:'5:46',boss:'Primeval',color:'primeval'},{time:'7:13',boss:'Frostscale',color:'frostscale'},{time:'8:40',boss:'Frostscale',color:'frostscale'},{time:'10:05',boss:'Frostscale',color:'frostscale'},{time:'11:37',boss:'Primeval',color:'primeval'},{time:'13:04',boss:'Skypetal',color:'skypetal'},{time:'14:38',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:03',boss:'Frostscale',color:'frostscale'},{time:'17:36',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:10',boss:'Primeval',color:'primeval'},{time:'20:37',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:10',boss:'Skypetal',color:'skypetal'},{time:'23:44',boss:'Skypetal',color:'skypetal'}],
+  6: [{time:'0:55',boss:'Primeval',color:'primeval'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'2:28',boss:'Primeval',color:'primeval'},{time:'4:00',boss:'Frostscale',color:'frostscale'},{time:'5:35',boss:'Skypetal',color:'skypetal'},{time:'7:07',boss:'Frostscale',color:'frostscale'},{time:'8:33',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Skypetal',color:'skypetal'},{time:'11:26',boss:'Frostscale',color:'frostscale'},{time:'12:52',boss:'Skypetal',color:'skypetal'},{time:'14:21',boss:'Skypetal',color:'skypetal'},{time:'15:51',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:16',boss:'Frostscale',color:'frostscale'},{time:'18:44',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:17',boss:'Primeval',color:'primeval'},{time:'21:42',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:16',boss:'Skypetal',color:'skypetal'}],
+  0: [{time:'0:59',boss:'Kaari',color:'primeval'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'2:33',boss:'Profane',color:'frostscale'},{time:'4:08',boss:'Safiji',color:'skypetal'},{time:'5:35',boss:'Profane',color:'frostscale'},{time:'7:03',boss:'Safiji',color:'skypetal'},{time:'8:38',boss:'Profane',color:'frostscale'},{time:'10:03',boss:'Lycan',color:'primeval'},{time:'11:37',boss:'Lycan',color:'primeval'},{time:'13:05',boss:'Profane',color:'frostscale'},{time:'14:37',boss:'Profane',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:12',boss:'Profane',color:'frostscale'},{time:'17:42',boss:'Kaari',color:'primeval'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:10',boss:'Lycan',color:'primeval'},{time:'20:42',boss:'Kaari',color:'primeval'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:07',boss:'Safiji',color:'skypetal'},{time:'23:34',boss:'Profane',color:'frostscale'}]
+};
+
+// Moonwater Bosses
+const moonwaterData = {
+  1: [{time:'2:34',boss:'Kaari',color:'primeval'},{time:'4:04',boss:'Profane',color:'frostscale'},{time:'5:32',boss:'Lycan',color:'primeval'},{time:'8:31',boss:'Safiji',color:'skypetal'},{time:'9:56',boss:'Profane',color:'frostscale'},{time:'11:30',boss:'Safiji',color:'skypetal'},{time:'12:54',boss:'Kaari',color:'primeval'},{time:'14:25',boss:'Kaari',color:'primeval'},{time:'16:00',boss:'Profane',color:'frostscale'},{time:'17:32',boss:'Safiji',color:'skypetal'},{time:'19:07',boss:'Lycan',color:'primeval'},{time:'20:39',boss:'Lycan',color:'primeval'},{time:'22:07',boss:'Kaari',color:'primeval'},{time:'23:35',boss:'Profane',color:'frostscale'}],
+  2: [{time:'0:58',boss:'Lycan',color:'primeval'},{time:'10:05',boss:'Kaari',color:'primeval'},{time:'11:33',boss:'Profane',color:'frostscale'},{time:'12:58',boss:'Kaari',color:'primeval'},{time:'14:28',boss:'Safiji',color:'skypetal'},{time:'15:58',boss:'Profane',color:'frostscale'},{time:'17:31',boss:'Lycan',color:'primeval'},{time:'18:22',boss:'Profane',color:'frostscale'},{time:'20:26',boss:'Kaari',color:'primeval'},{time:'21:52',boss:'Kaari',color:'primeval'},{time:'23:25',boss:'Profane',color:'frostscale'}],
+  3: [{time:'1:25',boss:'Lycan',color:'primeval'},{time:'3:00',boss:'Safiji',color:'skypetal'},{time:'4:30',boss:'Kaari',color:'primeval'},{time:'6:02',boss:'Kaari',color:'primeval'},{time:'7:28',boss:'Lycan',color:'primeval'},{time:'9:01',boss:'Kaari',color:'primeval'},{time:'10:33',boss:'Safiji',color:'skypetal'},{time:'12:00',boss:'Safiji',color:'skypetal'},{time:'13:33',boss:'Profane',color:'frostscale'},{time:'14:57',boss:'Lycan',color:'primeval'},{time:'16:25',boss:'Lycan',color:'primeval'},{time:'17:45',boss:'Profane',color:'frostscale'},{time:'19:16',boss:'Kaari',color:'primeval'},{time:'20:51',boss:'Lycan',color:'primeval'},{time:'22:10',boss:'Kaari',color:'primeval'},{time:'23:48',boss:'Kaari',color:'primeval'}],
+  4: [{time:'2:28',boss:'Profane',color:'frostscale'},{time:'4:03',boss:'Lycan',color:'primeval'},{time:'5:31',boss:'Profane',color:'frostscale'},{time:'7:05',boss:'Profane',color:'frostscale'},{time:'8:36',boss:'Lycan',color:'primeval'},{time:'10:05',boss:'Profane',color:'frostscale'},{time:'11:35',boss:'Profane',color:'frostscale'},{time:'13:00',boss:'Kaari',color:'primeval'},{time:'14:25',boss:'Profane',color:'frostscale'},{time:'15:52',boss:'Lycan',color:'primeval'},{time:'17:18',boss:'Lycan',color:'primeval'},{time:'18:43',boss:'Safiji',color:'skypetal'},{time:'20:17',boss:'Safiji',color:'skypetal'},{time:'21:50',boss:'Safiji',color:'skypetal'},{time:'23:20',boss:'Safiji',color:'skypetal'}],
+  5: [{time:'0:00',boss:'Kaari',color:'primeval'},{time:'1:28',boss:'Kaari',color:'primeval'},{time:'2:50',boss:'Safiji',color:'skypetal'},{time:'4:26',boss:'Lycan',color:'primeval'},{time:'5:53',boss:'Lycan',color:'primeval'},{time:'7:25',boss:'Safiji',color:'skypetal'},{time:'8:57',boss:'Safiji',color:'skypetal'},{time:'10:29',boss:'Kaari',color:'primeval'},{time:'11:57',boss:'Safiji',color:'skypetal'},{time:'13:24',boss:'Profane',color:'frostscale'},{time:'14:49',boss:'Safiji',color:'skypetal'},{time:'16:15',boss:'Kaari',color:'primeval'},{time:'17:47',boss:'Profane',color:'frostscale'},{time:'19:21',boss:'Kaari',color:'primeval'},{time:'20:53',boss:'Profane',color:'frostscale'},{time:'22:20',boss:'Lycan',color:'primeval'},{time:'23:40',boss:'Lycan',color:'primeval'}],
+  6: [{time:'0:20',boss:'Safiji',color:'skypetal'},{time:'1:58',boss:'Unknown',color:'unknown'},{time:'3:20',boss:'Unknown',color:'unknown'},{time:'4:56',boss:'Unknown',color:'unknown'},{time:'6:19',boss:'Unknown',color:'unknown'},{time:'7:39',boss:'Unknown',color:'unknown'},{time:'9:24',boss:'Unknown',color:'unknown'},{time:'11:04',boss:'Unknown',color:'unknown'},{time:'12:22',boss:'Unknown',color:'unknown'},{time:'13:52',boss:'Unknown',color:'unknown'},{time:'15:29',boss:'Unknown',color:'unknown'},{time:'16:53',boss:'Unknown',color:'unknown'},{time:'18:29',boss:'Unknown',color:'unknown'},{time:'20:14',boss:'Unknown',color:'unknown'},{time:'21:55',boss:'Unknown',color:'unknown'},{time:'23:25',boss:'Unknown',color:'unknown'}],
+  0: [{time:'0:43',boss:'Unknown',color:'unknown'},{time:'1:58',boss:'Unknown',color:'unknown'},{time:'3:34',boss:'Unknown',color:'unknown'},{time:'5:02',boss:'Unknown',color:'unknown'},{time:'6:34',boss:'Unknown',color:'unknown'},{time:'8:15',boss:'Unknown',color:'unknown'},{time:'9:51',boss:'Unknown',color:'unknown'},{time:'11:23',boss:'Unknown',color:'unknown'},{time:'12:46',boss:'Unknown',color:'unknown'},{time:'14:05',boss:'Unknown',color:'unknown'},{time:'15:28',boss:'Unknown',color:'unknown'},{time:'17:12',boss:'Unknown',color:'unknown'},{time:'18:38',boss:'Unknown',color:'unknown'},{time:'20:12',boss:'Unknown',color:'unknown'},{time:'21:51',boss:'Unknown',color:'unknown'}]
+};
+
+// Rituals
+const ritualsData = {
+  1: [{time:'6:10',boss:'Necro',color:'primeval'},{time:'11:01',boss:'Gloomdross',color:'primeval'},{time:'15:21',boss:'Fishing Longe',color:'primeval'},{time:'19:42',boss:'Gloomdross',color:'primeval'}],
+  2: [{time:'8:26',boss:'Yehara Rebel',color:'primeval'},{time:'11:30',boss:'Sentinel',color:'primeval'},{time:'14:47',boss:'Unknown',color:'unknown'}],
+  3: [{time:'6:52',boss:'Gloomdross',color:'primeval'},{time:'14:34',boss:'Unknown',color:'unknown'}],
+  4: [{time:'8:59',boss:'Unknown',color:'unknown'},{time:'12:09',boss:'Rebel',color:'primeval'},{time:'15:03',boss:'Unknown',color:'unknown'}],
+  5: [{time:'8:38',boss:'Rebel',color:'primeval'},{time:'12:34',boss:'Unknown',color:'unknown'}],
+  6: [{time:'9:37',boss:'Clear Sky',color:'primeval'},{time:'12:08',boss:'Gloomdross',color:'primeval'},{time:'14:42',boss:'Gloomdross',color:'primeval'},{time:'19:06',boss:'Oakshade',color:'primeval'}],
+  0: []
+};
+
+let selectedDay = 'today';
+let selectedRegion = 'silverfrost';
+let notifiedBosses = {};
+const bossData = silverfrostData;',color:'primeval'},{time:'3:58',boss:'Primeval',color:'primeval'},{time:'5:24',boss:'Skypetal',color:'skypetal'},{time:'6:55',boss:'Skypetal',color:'skypetal'},{time:'8:24',boss:'Primeval',color:'primeval'},{time:'9:54',boss:'Primeval',color:'primeval'},{time:'11:25',boss:'Primeval',color:'primeval'},{time:'13:00',boss:'Primeval',color:'primeval'},{time:'14:29',boss:'Skypetal',color:'skypetal'},{time:'15:54',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:25',boss:'Primeval',color:'primeval'},{time:'18:55',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:24',boss:'Frostscale',color:'frostscale'},{time:'21:59',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:25',boss:'Frostscale',color:'frostscale'}],
   5: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:32',boss:'Frostscale',color:'frostscale'},{time:'3:04',boss:'Primeval',color:'primeval'},{time:'4:37',boss:'Primeval',color:'primeval'},{time:'6:09',boss:'Primeval',color:'primeval'},{time:'7:35',boss:'Frostscale',color:'frostscale'},{time:'9:06',boss:'Skypetal',color:'skypetal'},{time:'10:37',boss:'Primeval',color:'primeval'},{time:'12:04',boss:'Frostscale',color:'frostscale'},{time:'13:38',boss:'Skypetal',color:'skypetal'},{time:'15:06',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:33',boss:'Frostscale',color:'frostscale'},{time:'17:58',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:33',boss:'Skypetal',color:'skypetal'},{time:'21:07',boss:'Frostscale',color:'frostscale'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:39',boss:'Skypetal',color:'skypetal'}],
   6: [{time:'0:00',boss:'Skypetal',color:'skypetal'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'1:26',boss:'Skypetal',color:'skypetal'},{time:'2:53',boss:'Frostscale',color:'frostscale'},{time:'4:19',boss:'Primeval',color:'primeval'},{time:'5:46',boss:'Primeval',color:'primeval'},{time:'7:13',boss:'Frostscale',color:'frostscale'},{time:'8:40',boss:'Frostscale',color:'frostscale'},{time:'10:05',boss:'Frostscale',color:'frostscale'},{time:'11:37',boss:'Primeval',color:'primeval'},{time:'13:04',boss:'Skypetal',color:'skypetal'},{time:'14:38',boss:'Frostscale',color:'frostscale'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'16:03',boss:'Frostscale',color:'frostscale'},{time:'17:36',boss:'Frostscale',color:'frostscale'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'19:10',boss:'Primeval',color:'primeval'},{time:'20:37',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'22:10',boss:'Skypetal',color:'skypetal'},{time:'23:44',boss:'Skypetal',color:'skypetal'}],
   0: [{time:'0:55',boss:'Primeval',color:'primeval'},{time:'1:00',boss:'Raging Yeti',color:'golden'},{time:'2:28',boss:'Primeval',color:'primeval'},{time:'4:00',boss:'Frostscale',color:'frostscale'},{time:'5:35',boss:'Skypetal',color:'skypetal'},{time:'7:07',boss:'Frostscale',color:'frostscale'},{time:'8:33',boss:'Skypetal',color:'skypetal'},{time:'10:00',boss:'Skypetal',color:'skypetal'},{time:'11:26',boss:'Frostscale',color:'frostscale'},{time:'12:52',boss:'Skypetal',color:'skypetal'},{time:'14:21',boss:'Skypetal',color:'skypetal'},{time:'15:51',boss:'Primeval',color:'primeval'},{time:'16:00',boss:'Raging Yeti',color:'golden'},{time:'17:16',boss:'Frostscale',color:'frostscale'},{time:'18:44',boss:'Skypetal',color:'skypetal'},{time:'19:00',boss:'Raging Yeti',color:'golden'},{time:'20:17',boss:'Primeval',color:'primeval'},{time:'21:42',boss:'Skypetal',color:'skypetal'},{time:'22:00',boss:'Raging Yeti',color:'golden'},{time:'23:16',boss:'Skypetal',color:'skypetal'}]
@@ -23,7 +55,99 @@ const bossData = {
 let selectedDay = 'today';
 let notifiedBosses = {};
 
-function loadSettings() {
+function getCurrentBossData() {
+  switch(selectedRegion) {
+    case 'silverfrost': return silverfrostData;
+    case 'moonwater': return moonwaterData;
+    case 'rituals': return ritualsData;
+    default: return silverfrostData;
+  }
+}
+
+function getSpawnTimesForDay(dayIndex) {
+  const currentData = getCurrentBossData();
+  if (!currentData[dayIndex]) return [];
+  const times = currentData[dayIndex].map(boss => boss.time);
+  return [...new Set(times)].sort();
+}
+
+// Region switching
+document.querySelectorAll('[data-region]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-region]').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    selectedRegion = this.dataset.region;
+    
+    const titles = {
+      silverfrost: 'Silverfrost Boss Schedule',
+      moonwater: 'Moonwater Boss Schedule',
+      rituals: 'Rituals Schedule'
+    };
+    document.getElementById('bossScheduleTitle').textContent = titles[selectedRegion];
+    renderBosses();
+  });
+});
+
+function formatCountdown(ms) {
+  if (ms <= 0) {
+    return selectedRegion === 'rituals' ? 'Done' : 'Dead';
+  }
+  const seconds = Math.floor(ms / 1000);
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+}
+
+function renderBosses() {
+  const serverTime = getServerTime();
+  const currentDay = serverTime.getDay();
+  const displayDay = selectedDay === 'today' ? currentDay : parseInt(selectedDay);
+  const currentData = getCurrentBossData();
+  
+  const bosses = currentData[displayDay].map(boss => {
+    const timeUntil = getTimeUntilSpawn(boss.time, displayDay);
+    const localSpawnTime = new Date(Date.now() + timeUntil);
+    return {
+      boss: boss.boss,
+      color: boss.color,
+      time: boss.time,
+      dayIndex: displayDay,
+      timeUntil: timeUntil,
+      countdown: formatCountdown(timeUntil),
+      localSpawnTime: localSpawnTime
+    };
+  });
+  
+  let filteredBosses = bosses;
+  if (selectedDay === 'today') {
+    filteredBosses = bosses;
+  }
+  
+  filteredBosses.sort((a, b) => a.timeUntil - b.timeUntil);
+  
+  const table = document.getElementById('bossTable');
+  table.innerHTML = '';
+  
+  if (filteredBosses.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="4" style="text-align: center; color: #8b949e; padding: 2rem;">No bosses scheduled for this day</td>';
+    table.appendChild(row);
+    return;
+  }
+  
+  filteredBosses.forEach(boss => {
+    const row = document.createElement('tr');
+    const statusClass = boss.timeUntil <= 0 ? 'spawned' : boss.color;
+    row.innerHTML = `
+      <td><span class="boss-name ${boss.color}">${boss.boss}</span></td>
+      <td><span class="countdown ${statusClass}">${boss.countdown}</span></td>
+      <td>${boss.time}</td>
+      <td>${boss.localSpawnTime.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+    `;
+    table.appendChild(row);
+  });
+}
   const defaults = {
     enableNotifications: false,
     notificationMinutes: '5',
@@ -61,7 +185,7 @@ function applySettings(settings) {
   document.getElementById('soundEnabled').checked = settings.soundEnabled;
 }
 
-function cleanOldNotifications() {
+function loadSettings() {
   const now = Date.now();
   const twoHours = 2 * 60 * 60 * 1000;
   Object.keys(notifiedBosses).forEach(key => {
@@ -160,7 +284,7 @@ function updateClock() {
   document.getElementById('serverClock').textContent = 'Server Time: ' + serverTime.toLocaleTimeString('en-US', { hour12: false });
 }
 
-function checkNotifications() {
+function cleanOldNotifications() {
   const enabled = document.getElementById('enableNotifications').checked;
   if (!enabled) return;
   
@@ -190,7 +314,36 @@ function checkNotifications() {
   });
 }
 
-function showNotification(bossName, time, minutes, playSound) {
+function checkNotifications() {
+  const enabled = document.getElementById('enableNotifications').checked;
+  if (!enabled) return;
+  
+  const minutesBefore = parseInt(document.getElementById('notificationMinutes').value);
+  const soundEnabled = document.getElementById('soundEnabled').checked;
+  
+  cleanOldNotifications();
+  
+  const currentData = getCurrentBossData();
+  Object.keys(currentData).forEach(day => {
+    currentData[day].forEach(boss => {
+      const timeUntil = getTimeUntilSpawn(boss.time, parseInt(day));
+      const secondsUntil = Math.floor(timeUntil / 1000);
+      const spawnTimestamp = Date.now() + timeUntil;
+      const notificationId = boss.boss + '_' + boss.time + '_day' + day + '_' + Math.floor(spawnTimestamp / 60000);
+      
+      const minSeconds = (minutesBefore * 60) - 30;
+      const maxSeconds = (minutesBefore * 60) + 30;
+      
+      if (secondsUntil >= minSeconds && secondsUntil <= maxSeconds && !notifiedBosses[notificationId]) {
+        notifiedBosses[notificationId] = Date.now();
+        showNotification(boss.boss, boss.time, minutesBefore, soundEnabled);
+        if (window.savedSettings) {
+          window.savedSettings.notifiedBosses = notifiedBosses;
+        }
+      }
+    });
+  });
+}
   if (!('Notification' in window)) return;
   
   if (Notification.permission === 'granted') {
