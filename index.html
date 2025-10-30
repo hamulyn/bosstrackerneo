@@ -1,212 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir='ltr' lang='en'>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boss & Quest Tracker</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh;padding:2rem}.container{max-width:1200px;margin:0 auto}h1{text-align:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2rem;font-size:2.5rem}.nav-tabs{display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}.nav-tab{padding:1rem 2rem;border-radius:8px;background:#21262d;border:1px solid #30363d;color:#c9d1d9;cursor:pointer;transition:all .2s;font-size:1rem;font-weight:500}.nav-tab:hover{background:#30363d}.nav-tab.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-color:#667eea;font-weight:700}.tab-content{display:none}.tab-content.active{display:block}.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:2rem;margin-bottom:2rem;box-shadow:0 8px 24px rgba(0,0,0,.5)}.card h3{margin:0 0 1.5rem;color:#58a6ff;border-left:3px solid #58a6ff;padding-left:1rem;font-size:1.5rem}.card p{color:#8b949e;margin-bottom:1rem}.server-time{display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.5rem;background:#21262d;padding:1rem;border-radius:8px}.server-time span{font-size:1.2rem;font-family:monospace;color:#58a6ff;font-weight:700}.day-filter{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}.day-btn{padding:.5rem 1rem;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;transition:all .2s;font-size:.95rem}.day-btn:hover{background:#30363d}.day-btn.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-weight:700}table{width:100%;border-collapse:collapse;background:#21262d;border-radius:8px;overflow:hidden}thead{background:#30363d}th{padding:.75rem;text-align:center;font-size:.8rem;color:#58a6ff;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #30363d}th:first-child{text-align:left}td{padding:1rem .75rem;white-space:nowrap;text-align:center;border-bottom:1px solid #30363d;color:#8b949e}td:first-child{text-align:left}tbody tr:hover{background:rgba(48,54,61,.5)}.boss-name{font-weight:700;font-size:1.1rem}.countdown{font-family:monospace;font-size:1.1rem;font-weight:700}.notification-settings{display:flex;flex-direction:column;gap:1.5rem}.notification-option{display:flex;align-items:center;gap:.75rem;cursor:pointer;color:#c9d1d9}.notification-option input[type=checkbox]{width:20px;height:20px;accent-color:#58a6ff;cursor:pointer}.notification-inline{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}.notification-inline label{color:#8b949e;white-space:nowrap}.notification-inline select{flex:1;min-width:150px;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.5rem .75rem;color:#c9d1d9;outline:0;cursor:pointer}.btn-test{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:6px;padding:.5rem 1.5rem;font-weight:700;cursor:pointer;transition:transform .2s;font-size:.95rem}.btn-test:hover{transform:translateY(-2px)}.btn-save{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);color:#fff;border:none;border-radius:6px;padding:.75rem 2rem;font-weight:700;cursor:pointer;transition:all .2s;font-size:1rem;margin-top:1rem;width:100%}.btn-save:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(63,185,80,.4)}.save-status{text-align:center;margin-top:1rem;padding:.75rem;border-radius:6px;font-weight:700;opacity:0;transition:opacity .3s}.save-status.show{opacity:1}.save-status.success{background:rgba(63,185,80,.2);color:#3fb950;border:1px solid #3fb950}.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}.summary-card{background:#21262d;border:1px solid #30363d;border-radius:8px;padding:1.5rem;text-align:center}.summary-card h4{color:#8b949e;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;font-weight:500}.summary-card .value{font-size:2rem;font-weight:700;margin:.5rem 0}.summary-card .lost{color:#f85149}.summary-card .earned{color:#3fb950}.summary-card .total{color:#58a6ff}.summary-card .subtitle{color:#8b949e;font-size:.85rem;margin-top:.5rem}.quest-section{margin-bottom:2rem}.quest-section h4{color:#58a6ff;font-size:1.2rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #30363d}.quest-item{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:#21262d;border:1px solid #30363d;border-radius:8px;margin-bottom:.75rem;transition:all .2s;cursor:pointer}.quest-item:hover{background:rgba(48,54,61,.5)}.quest-item.completed{opacity:.5;background:rgba(63,185,80,.1)}.quest-left{display:flex;align-items:center;gap:1rem;flex:1}.quest-checkbox{width:22px;height:22px;accent-color:#58a6ff;cursor:pointer}.quest-name{font-weight:500;color:#c9d1d9;font-size:1rem}.quest-rewards{display:flex;gap:1.5rem;align-items:center}.reward-item{text-align:center}.reward-label{color:#8b949e;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.25rem}.reward-value{color:#ffd700;font-weight:700;font-size:1rem}.reward-value.xp{color:#3fb950}.button-group{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem}.btn{padding:.75rem 2rem;border-radius:6px;border:none;font-weight:700;cursor:pointer;transition:all .2s;font-size:.95rem}.btn-reset{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}.btn-reset:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,.4)}.btn-complete{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);color:#fff}.btn-complete:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(63,185,80,.4)}.progress-bar-container{background:#21262d;border-radius:8px;height:12px;overflow:hidden;margin-top:1rem}.progress-bar{background:linear-gradient(135deg,#3fb950 0%,#2ea043 100%);height:100%;transition:width .3s ease}.note-box{background:#21262d;border:1px solid #30363d;border-radius:8px;padding:1rem;margin-top:.5rem}.note-box p{margin:0;color:#8b949e;font-size:.9rem;line-height:1.6}.note-box strong{color:#58a6ff}.footer{text-align:center;margin-top:3rem;color:#8b949e;font-size:.875rem;padding-bottom:2rem}.highlight{font-weight:700}.primeval{color:#3fb950}.frostscale{color:#58a6ff}.skypetal{color:#ff8c00}.golden{color:#ffd700}.ciano{color:#00ffff}.spawned{color:#f85149}.unknown{color:#8b949e}.dead{color:#f85149}.done{color:#3fb950}@media (max-width:768px){.quest-item{flex-direction:column;gap:1rem}.quest-rewards{width:100%;justify-content:space-around}.summary-grid{grid-template-columns:1fr}.nav-tab{padding:.75rem 1.5rem;font-size:.9rem}}
-</style>
+<meta content='width=device-width, initial-scale=1' name='viewport'/>
+<title>NEO QoL</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<link href='https://cdn.jsdelivr.net/npm/lucide-static@0.367.0/icons/swords.svg' rel='icon' type='image/svg+xml'/>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'/>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-<h1>🎮 Boss & Quest Tracker</h1>
-<div class="nav-tabs">
-<button class="nav-tab active" data-tab="boss">🔍 Boss Tracker</button>
-<button class="nav-tab" data-tab="quest">✅ Quest Tracker</button>
-<button class="nav-tab" data-tab="report">📝 Report Boss Spawn</button>
-</div>
-<div id="boss-tab" class="tab-content active">
-<div class="card" style="background:rgba(255,193,7,0.15);border-color:#ffc107;margin-bottom:2rem">
-<div style="display:flex;align-items:center;gap:1rem">
-<span style="font-size:2.5rem">⚠️</span>
-<div>
-<h3 style="color:#ffc107;margin:0;border:none;padding:0;font-size:1.2rem">Important Notice - Schedule Update</h3>
-<p style="color:#ffc107;margin:0.5rem 0 0 0;font-weight:500;font-size:0.95rem">Due to the latest game update, all boss spawn times have been changed. Some schedules may contain errors as we continue to verify and update the information. Please report any discrepancies you find!</p>
+<!-- Sidebar -->
+<aside class='sidebar d-flex flex-column flex-shrink-0 position-fixed' id='sidebar'>
+<button class='toggle-btn' id='sidebarToggleBtn'>
+<i data-lucide='chevrons-left-right-ellipsis'></i>
+</button>
+<div class='sidebar-header p-4 text-center'>
+<div class='logo'>
+<i data-lucide='swords'></i>
+<span class='logo-text'>NEO QoL</span>
 </div>
 </div>
+<nav class='sidebar-content flex-column nav'>
+<div class='nav-item'>
+<a class='sidebar-link nav-link' data-section='field-boss' href='#'>
+<i data-lucide='alarm-clock'></i>
+<span class='nav-text'>Raging Yeti Event</span>
+</a>
 </div>
-<div class="card">
-<h3>Overview</h3>
-<p>Track boss spawn times across all regions. Select a region below to view specific boss schedules.</p>
-<p>Server times are displayed in GMT-6. Your local timezone is <span class="frostscale highlight" id="userTimezone"></span>.</p>
-<div class="server-time"><span>⏰</span><span id="serverClock">00:00:00</span></div>
+<div class='nav-item'>
+<a class='sidebar-link nav-link' data-section='gold-xp-tracker' href='#'>
+<i data-lucide='coins'></i>
+<span class='nav-text'>Gold & XP Tracker</span>
+</a>
 </div>
-<div class="card">
-<h3>Select Region</h3>
-<div class="day-filter" style="margin-bottom:1.5rem">
-<button class="day-btn active" data-region="silverfrost">❄️ Silverfrost</button>
-<button class="day-btn" data-region="moonwater">🌊 Moonwater</button>
-<button class="day-btn" data-region="rituals">🔮 Rituals</button>
+<div class='nav-item'>
+<a class='sidebar-link nav-link' data-section='supreme-force' href='#'>
+<i data-lucide='zap'></i>
+<span class='nav-text'>SF Calculator</span>
+</a>
 </div>
-<h3>Select Day</h3>
-<div class="day-filter" id="dayFilter">
-<button class="day-btn active" data-day="today">Today</button>
-<button class="day-btn" data-day="0">Sunday</button>
-<button class="day-btn" data-day="1">Monday</button>
-<button class="day-btn" data-day="2">Tuesday</button>
-<button class="day-btn" data-day="3">Wednesday</button>
-<button class="day-btn" data-day="4">Thursday</button>
-<button class="day-btn" data-day="5">Friday</button>
-<button class="day-btn" data-day="6">Saturday</button>
+<div class='nav-item'>
+<a class='sidebar-link nav-link' data-section='boss-timer' href='#'>
+<i data-lucide='history'></i>
+<span class='nav-text'>Field Boss</span>
+</a>
+</div>
+<div class='nav-item'>
+<a class='sidebar-link nav-link' data-section='ancient-lunar' href='#'>
+<i data-lucide='moon'></i>
+<span class='nav-text'>Ancient Lunar</span>
+</a>
+</div>
+</nav>
+<div class='server-time-section p-4 mt-auto'>
+<div class='server-time-label'>Server Time</div>
+<div id='server-clock'></div>
+<div class='region-selector mt-3'>
+<button class='region-btn' id='region-na' type='button'>
+<i data-lucide='globe'></i> <span class='region-text'>NA</span>
+</button>
+<button class='region-btn' id='region-eu' type='button'>
+<i data-lucide='globe'></i> <span class='region-text'>EU</span>
+</button>
 </div>
 </div>
-<div class="card">
-<h3 id="bossScheduleTitle">Silverfrost Boss Schedule</h3>
-<div style="overflow-x:auto"><table><thead><tr><th>🔍 Boss Name</th><th>Time Until Spawn</th><th>Server Time</th><th>Next Spawn (Your Time)</th></tr></thead><tbody id="bossTable"></tbody></table></div>
+<div class='sidebar-footer p-4 text-center'>
+<div class='footer-text'>© 2025 Neo Quality of Life</div>
 </div>
-<div class="card">
-<h3>⚙️ Notification Settings</h3>
-<div class="notification-settings">
-<label class="notification-option"><input type="checkbox" id="enableNotifications"><span>🔔 Enable Notifications</span></label>
-<div class="notification-inline"><label>Alert me</label><select id="notificationMinutes"><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="20">20 minutes before</option><option value="30">30 minutes before</option></select><button class="btn-test" id="testNotification">Test Notification</button></div>
-<label class="notification-option"><input type="checkbox" id="soundEnabled"><span>🔊 Play Sound with Notification</span></label>
+</aside>
 
-<div style="border-top:1px solid #30363d;margin-top:1.5rem;padding-top:1.5rem">
-<h4 style="color:#58a6ff;margin-bottom:1rem;font-size:1.1rem">📍 Select Regions to Notify</h4>
+<main class='main-content' id='mainContent'>
+<div class='container-fluid'>
 
-<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifySilverfrost"><span>❄️ Silverfrost Mountains</span></label>
-<div id="silverfrost-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-primeval"><span class="primeval">🌲 Primeval (Primeval Forest)</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-frostscale"><span class="frostscale">❄️ Frostscale (Frostscale Basin)</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-skypetal"><span class="skypetal">🌸 Skypetal (Skypetal Plains)</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="silverfrost-golden"><span class="golden">👑 Raging Yeti (Golden Boss)</span></label>
+<!-- Raging Yeti Event -->
+<section class='content-section' id='field-boss'>
+<div class='row'>
+<div class='col-12'>
+<h1 class='mb-4'>Raging Yeti Event</h1>
 </div>
+</div>
+<div class='row' id='boss-timers-container'></div>
+</section>
 
-<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifyMoonwater"><span>🌊 Moonwater Plains</span></label>
-<div id="moonwater-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-kaari"><span class="ciano">💎 Kaari Lord</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-profane"><span class="frostscale">⚔️ Profane Jiangshi</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-lycan"><span class="primeval">🐺 Lycan the Mighty</span></label>
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="moonwater-safiji"><span class="skypetal">🔥 Safiji</span></label>
+<!-- Gold & XP Tracker -->
+<section class='content-section' id='gold-xp-tracker'>
+<div class='row'>
+<div class='col-12'>
+<div class='d-flex justify-content-between align-items-center mb-4'>
+<h1>Gold & XP Farm Tracker</h1>
+<div class='filter-events-container'>
+<button aria-expanded='false' class='btn-custom-dropdown dropdown-toggle' data-bs-toggle='dropdown' type='button'>
+<i data-lucide='list-filter'></i> FILTER
+</button>
+<ul class='dropdown-menu'>
+<li>
+<label class='dropdown-item d-flex align-items-center'>
+<input class='form-check-input me-2' id='gxp-filter-show-values' type='checkbox'/>
+Show Gold / XP
+</label>
+</li>
+</ul>
 </div>
+</div>
+<div id='gold-xp-tracker-root'></div>
+</div>
+</div>
+</section>
 
-<label class="notification-option" style="margin-bottom:0.5rem"><input type="checkbox" id="notifyRituals"><span>🔮 Rituals</span></label>
-<div id="rituals-bosses" style="display:flex;flex-direction:column;gap:0.5rem;margin-left:2rem;margin-bottom:1rem;padding:0.75rem;background:#21262d;border-radius:6px;border:1px solid #30363d">
-<label class="notification-option" style="font-size:0.9rem"><input type="checkbox" id="rituals-all"><span class="primeval">✨ All Ritual Bosses</span></label>
+<!-- Supreme Force Calculator -->
+<section class='content-section' id='supreme-force'>
+<div class='row'>
+<div class='col-12'>
+<h1 class='mb-4'>Supreme Force Calculator</h1>
 </div>
 </div>
-
-<div class="note-box"><p><strong>Note:</strong> Browser notifications must be enabled for this feature to work. Select which regions and bosses you want to be notified about.</p></div>
-<button class="btn-save" id="saveSettings">💾 Save Settings</button>
-<div class="save-status success" id="saveStatus">✓ Settings saved!</div>
-</div>
-</div>
-</div>
-<div id="quest-tab" class="tab-content">
-<div class="card" style="background:rgba(255,140,0,0.15);border-color:#ff8c00;margin-bottom:2rem">
-<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
-<span style="font-size:3rem">🚧</span>
-<div>
-<h3 style="color:#ff8c00;margin:0;border:none;padding:0">Under Construction</h3>
-<p style="color:#ff8c00;margin:0.5rem 0 0 0;font-weight:500">The Quest Tracker is currently under development. This feature will be available soon!</p>
-</div>
-</div>
-</div>
-<div class="card">
-<h3>📊 Progress Overview</h3>
-<div class="summary-grid">
-<div class="summary-card"><h4>Completed</h4><div class="value earned" id="completedCount">0/34</div><div class="subtitle">Quests Finished</div><div class="progress-bar-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div></div>
-<div class="summary-card"><h4>Gold Earned</h4><div class="value earned" id="goldEarned">0g</div><div class="subtitle">From Completed Quests</div></div>
-<div class="summary-card"><h4>Gold Lost</h4><div class="value lost" id="goldLost">0g</div><div class="subtitle">From Incomplete Quests</div></div>
-<div class="summary-card"><h4>XP Earned</h4><div class="value earned" id="xpEarned">0</div><div class="subtitle">Experience Points</div></div>
-<div class="summary-card"><h4>XP Lost</h4><div class="value lost" id="xpLost">0</div><div class="subtitle">From Incomplete Quests</div></div>
-<div class="summary-card"><h4>Total Daily Value</h4><div class="value total" id="totalValue">0g</div><div class="subtitle">Total Gold + <span id="totalXP">0</span> XP</div></div>
-</div>
-<div class="button-group">
-<button class="btn btn-complete" id="completeAll">✓ Complete All</button>
-<button class="btn btn-reset" id="resetAll">↻ Reset All</button>
-</div>
-</div>
-<div class="card">
-<h3>🗺️ Quest List</h3>
-<div class="quest-section"><h4>Frostscale Basin</h4><div id="frostscale-quests"></div></div>
-<div class="quest-section"><h4>Ancient Lunar (MSP)</h4><div id="msp-quests"></div></div>
-<div class="quest-section"><h4>Silvefrost Faction (SSP)</h4><div id="ssp-quests"></div></div>
-<div class="quest-section"><h4>Mushin Tower (F7)</h4><div id="mushin-quests"></div></div>
-<div class="quest-section"><h4>Silverfrost Fieldboss</h4><div id="fieldboss-quests"></div></div>
-<div class="quest-section"><h4>Silverfrost Blues</h4><div id="blues-quests"></div></div>
-<div class="quest-section"><h4>Silverfrost</h4><div id="silverfrost-quests"></div></div>
-<div class="quest-section"><h4>Moonwater Plains</h4><div id="moonwater-quests"></div></div>
-<div class="note-box"><p><strong>Note:</strong> Your progress is automatically saved in your browser.</p></div>
-</div>
-</div>
-<div id="report-tab" class="tab-content">
-<div class="card">
-<h3>📝 Report Boss Spawn</h3>
-<p>Help the community by reporting boss spawn locations! Your reports will be collected to improve the boss schedule accuracy.</p>
-<div class="note-box" style="background:rgba(88,166,255,0.15);border-color:#58a6ff;margin-top:1rem;margin-bottom:2rem">
-<p style="color:#58a6ff;font-weight:bold">ℹ️ How to Report:</p>
-<p style="color:#58a6ff">When you see a boss spawn, immediately fill out this form with the correct information. All reports are saved to help complete the spawn calendar.</p>
-</div>
-<form id="reportForm" style="display:flex;flex-direction:column;gap:1.5rem">
-<div style="display:flex;flex-direction:column;gap:.5rem">
-<label style="color:#58a6ff;font-weight:bold;font-size:.95rem">Day of the Week</label>
-<select id="reportDay" required style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.75rem;color:#c9d1d9;font-size:1rem;cursor:pointer">
-<option value="">Select a day...</option>
-<option value="0">Sunday</option>
-<option value="1">Monday</option>
-<option value="2">Tuesday</option>
-<option value="3">Wednesday</option>
-<option value="4">Thursday</option>
-<option value="5">Friday</option>
-<option value="6">Saturday</option>
+<div class='dungeon-select'>
+<label for='dungeon-select'>Select the Dungeon:</label>
+<select id='dungeon-select'>
+<option data-force='14690' value='sundered-lower'>Sundered Nexus: Lower Floor</option>
+<option data-force='14690' value='sundered-upper'>Sundered Nexus: Upper Floor</option>
+<option data-force='11890' value='sogun-inner'>Sogun's Lament: Inner</option>
+<option data-force='10710' value='sogun-gardens'>Sogun's Lament: Gardens</option>
+<option data-force='7110' value='ebondrake'>Ebondrake Hideout</option>
+<option data-force='6370' value='chuanka'>Chuanka Frost Cavern</option>
+<option data-force='8020' value='talus'>Talus Dungeon</option>
 </select>
+<span class='dungeon-force' id='dungeon-force'>Required: 14,690</span>
 </div>
-<div style="display:flex;flex-direction:column;gap:.5rem">
-<label style="color:#58a6ff;font-weight:bold;font-size:.95rem">Spawn Time (Server Time GMT-6)</label>
-<select id="reportTime" required style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.75rem;color:#c9d1d9;font-size:1rem;cursor:pointer">
-<option value="">Select spawn time...</option>
-</select>
-<div id="customTimeSection" style="display:none;margin-top:.5rem">
-<label style="color:#8b949e;font-size:.85rem;margin-bottom:.25rem;display:block">Enter custom time:</label>
-<input type="time" id="customTime" style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.75rem;color:#c9d1d9;font-size:1rem;width:100%;cursor:pointer">
+<div class='member-input'>
+<label for='member1'>Player 1:</label>
+<input id='member1' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
+<label for='member2'>Player 2:</label>
+<input id='member2' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
+<label for='member3'>Player 3:</label>
+<input id='member3' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
+<label for='member4'>Player 4:</label>
+<input id='member4' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
+<label for='member5'>Player 5:</label>
+<input id='member5' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
+<label for='member6'>Player 6:</label>
+<input id='member6' min='0' placeholder='Enter player Personal Supreme Force' step='1' type='number'/>
 </div>
+<div class='party-info'>
+<span id='party-average'>Party Average Force: -</span>
 </div>
-<div style="display:flex;flex-direction:column;gap:.5rem">
-<label style="color:#58a6ff;font-weight:bold;font-size:.95rem">Boss Type</label>
-<select id="reportBoss" required style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.75rem;color:#c9d1d9;font-size:1rem;cursor:pointer">
-<option value="">Select boss type...</option>
-<option value="Primeval">Primeval (Primeval Forest)</option>
-<option value="Frostscale">Frostscale (Frostscale Basin)</option>
-<option value="Skypetal">Skypetal (Skypetal Plains)</option>
-</select>
-</div>
-<div style="display:flex;flex-direction:column;gap:.5rem">
-<label style="color:#58a6ff;font-weight:bold;font-size:.95rem">Additional Notes (Optional)</label>
-<textarea id="reportNotes" placeholder="Any additional information about the spawn..." style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:.75rem;color:#c9d1d9;font-size:1rem;min-height:100px;resize:vertical;font-family:inherit"></textarea>
-</div>
-<button type="submit" class="btn-save" style="margin-top:0">📤 Submit Report</button>
-<div class="save-status success" id="reportStatus" style="margin-top:0">✓ Report submitted successfully! Thank you for your contribution.</div>
-<div class="save-status" id="reportError" style="margin-top:0;background:rgba(248,81,73,.2);color:#f85149;border:1px solid #f85149">❌ Error submitting report. Please try again.</div>
-</form>
-</div>
-<div class="card">
-<h3>📊 Recent Reports</h3>
-<p style="margin-bottom:1.5rem">Latest boss spawn reports from the community</p>
-<div style="overflow-x:auto">
-<table>
-<thead>
-<tr>
-<th>Date & Time</th>
-<th>Day</th>
-<th>Spawn Time</th>
-<th>Boss</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody id="reportsTable">
-<tr>
-<td colspan="5" style="text-align:center;color:#8b949e;padding:2rem">No reports yet. Be the first to contribute!</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="footer"><p>Boss & Quest Tracker | Real-time countdown, notifications, and progress tracking</p><p style="margin-top:0.5rem">Created by <a href="https://discord.com/users/.skyze" target="_blank" rel="noopener noreferrer" style="color:#58a6ff;text-decoration:none;font-weight:700;transition:color 0.2s" onmouseover="this.style.color='#667eea'" onmouseout="this.style.color='#58a6ff'">Skyze</a> 💜</p></div>
-</div>
-<script src="boss-quest-tracker.js"></script>
+</section>
 
+<!-- Field Boss Timer -->
+<section class='content-section' id='boss-timer'>
+<div class='row'>
+<div class='col-12'>
+<h1 class='mb-4'>Boss Timer</h1>
+</div>
+</div>
+<div class='section-title-container'>
+<h3 class='section-title'>Select Channel</h3>
+</div>
+<div class='channel-container' id='channel-container'></div>
+<div class='section-title-container'>
+<h3 class='section-title'>Active Timers</h3>
+<div class='timer-sort-controls'>
+<button class='btn-toggle-sort' id='toggle-sort-timers' title='Toggle Sort Order'>
+<i data-lucide='arrow-down-up'></i> Sort
+</button>
+<button class='btn-clear-all' id='clear-all-timers' title='Remove All Timers'>
+<i data-lucide='trash-2'></i>
+</button>
+</div>
+</div>
+<div class='active-timers' id='active-timers'></div>
+<div class='section-title-container'>
+<h3 class='section-title'>How to Use</h3>
+</div>
+<p><i data-lucide='chevron-right'></i> Click on a channel button</p>
+<p><i data-lucide='chevron-right'></i> Select: Normal (5 min) or Mutant (8 min)</p>
+<p><i data-lucide='chevron-right'></i> Monitor for ongoing timers</p>
+</section>
+
+<!-- Ancient Lunar -->
+<section class='content-section' id='ancient-lunar'>
+<div class='row'>
+<div class='col-12'>
+<h1 class='mb-4'>Ancient Lunar</h1>
+</div>
+</div>
+
+<div class='ancient-lunar-section mb-5'>
+<div class='section-title-container'>
+<h3 class='section-title'><i data-lucide='crown'></i> Monarch Respawn Tracker</h3>
+</div>
+<div class='monarch-channels'>
+<div class='monarch-channel-box'>
+<div class='monarch-header'>
+<h3>Channel 1</h3>
+<div class='monarch-sound-controls'>
+<button class='btn-notification-toggle' data-monarch-channel='1' title='Toggle notification'>
+<i data-lucide='bell'></i>
+</button>
+<button class='btn-test-sound' data-monarch-channel='1' title='Test notification sound'>
+<i data-lucide='volume-2'></i>
+</button>
+</div>
+</div>
+<button class='btn-monarch-kill' data-channel='1'>
+<i data-lucide='skull'></i> Mark Kill Time
+</button>
+<div class='monarch-windows'>
+<div class='monarch-window' id='monarch-window1-1'>
+<div class='monarch-window-label'>Window 1 (2h 25min)</div>
+<div class='monarch-window-time' id='monarch-timer1-1'>--:--:--</div>
+</div>
+<div class='monarch-window' id='monarch-window1-2'>
+<div class='monarch-window-label'>Window 2 (4h 25min)</div>
+<div class='monarch-window-time' id='monarch-timer1-2'>--:--:--</div>
+</div>
+</div>
+<div class='monarch-status' id='monarch-status-1'>No timer set</div>
+<div class='monarch-confirm-buttons' id='monarch-confirm-1' style='display:none;'>
+<button class='btn-monarch-confirm' data-channel='1'>
+<i data-lucide='check-circle'></i> Confirm Respawn
+</button>
+<button class='btn-monarch-cancel' data-channel='1'>
+<i data-lucide='x-circle'></i> Not Yet
+</button>
+</div>
+<div class='monarch-notice' style='display:none;' id='monarch-notice-1'>
+<i data-lucide='alert-triangle'></i> In low population channels, Monarch may swap between CH1 and CH2
+</div>
+</div>
+<div class='monarch-channel-box'>
+<div class='monarch-header'>
+<h3>Channel 2</h3>
+<div class='monarch-sound-controls'>
+<button class='btn-notification-toggle' data-monarch-channel='2' title='Toggle notification'>
+<i data-lucide='bell'></i>
+</button>
+<button class='btn-test-sound' data-monarch-channel='2' title='Test notification sound'>
+<i data-lucide='volume-2'></i>
+</button>
+</div>
+</div>
+<button class='btn-monarch-kill' data-channel='2'>
+<i data-lucide='skull'></i> Mark Kill Time
+</button>
+<div class='monarch-windows'>
+<div class='monarch-window' id='monarch-window2-1'>
+<div class='monarch-window-label'>Window 1 (2h 25min)</div>
+<div class='monarch-window-time' id='monarch-timer2-1'>--:--:--</div>
+</div>
+<div class='monarch-window' id='monarch-window2-2'>
+<div class='monarch-window-label'>Window 2 (4h 25min)</div>
+<div class='monarch-window-time' id='monarch-timer2-2'>--:--:--</div>
+</div>
+</div>
+<div class='monarch-status' id='monarch-status-2'>No timer set</div>
+<div class='monarch-confirm-buttons' id='monarch-confirm-2' style='display:none;'>
+<button class='btn-monarch-confirm' data-channel='2'>
+<i data-lucide='check-circle'></i> Confirm Respawn
+</button>
+<button class='btn-monarch-cancel' data-channel='2'>
+<i data-lucide='x-circle'></i> Not Yet
+</button>
+</div>
+<div class='monarch-notice' style='display:none;' id='monarch-notice-2'>
+<i data-lucide='alert-triangle'></i> In low population channels, Monarch may swap between CH1 and CH2
+</div>
+</div>
+</div>
+<div class='section-title-container mt-4'>
+<h3 class='section-title'>How to Use</h3>
+</div>
+<p><i data-lucide='chevron-right'></i> Click "Mark Kill Time" when Monarch dies</p>
+<p><i data-lucide='chevron-right'></i> Timer will count down to respawn</p>
+<p><i data-lucide='chevron-right'></i> Enable sound notification for alerts</p>
+</div>
+
+<div class='ancient-lunar-section'>
+<div class='section-title-container'>
+<h3 class='section-title'><i data-lucide='calculator'></i> Grind Calculator</h3>
+</div>
+<div class='grind-calculator'>
+<div class='calc-input-group'>
+<label>Mob Level:</label>
+<div class='mob-level-selector'>
+<button class='btn-mob-level active' data-level='60'>Level 60</button>
+<button class='btn-mob-level' data-level='70'>Level 70</button>
+</div>
+</div>
+<div class='calc-input-group'>
+<label for='char-level'>Character Level (63-80):</label>
+<input type='number' id='char-level' min='63' max='80' placeholder='Enter level'>
+</div>
+<div class='calc-input-group'>
+<label for='xp-boost'>XP Boost (%):</label>
+<input type='number' id='xp-boost' min='100' max='280' placeholder='100-280%' value='100'>
+</div>
+<div class='calc-input-group'>
+<label for='clear-time'>Clear Time (seconds):</label>
+<input type='number' id='clear-time' min='0' placeholder='Time to kill all mobs' value='0'>
+<small style='color: var(--text-muted); font-size: 0.85rem; margin-top: 5px; display: block;'>
+Enter the time in seconds it takes you to clear the entire mob spawn.<br>
+Note: Respawn occurs 30 seconds after all mobs are killed.
+</small>
+</div>
+<div class='calc-input-group'>
+<label for='small-mobs'>Small Mobs per Respawn:</label>
+<input type='number' id='small-mobs' min='0' placeholder='Number of small mobs'>
+</div>
+<div class='calc-input-group'>
+<label for='big-mobs'>Big Mobs per Respawn:</label>
+<input type='number' id='big-mobs' min='0' placeholder='Number of big mobs'>
+</div>
+<button class='btn-calculate' id='calculate-grind'>
+<i data-lucide='play'></i> Calculate
+</button>
+<div class='calc-results' id='calc-results'>
+<div class='result-item'>
+<span class='result-label'>XP per Minute:</span>
+<span class='result-value' id='xp-per-min'>--</span>
+</div>
+<div class='result-item'>
+<span class='result-label'>Estimated XP in 1 Hour:</span>
+<span class='result-value' id='xp-per-hour'>--</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</main>
+
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+<script src='https://unpkg.com/lucide@latest'></script>
+<script src="script.js"></script>
 </body>
 </html>
