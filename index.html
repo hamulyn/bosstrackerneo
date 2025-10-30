@@ -15,13 +15,6 @@
     if (!allowedDomains.includes(currentDomain) && !currentDomain.includes('localhost')) {
         document.addEventListener('DOMContentLoaded', function() {
             document.body.innerHTML = `
-                <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #161b22; color: white; font-family: Arial;">
-                    <div style="text-align: center;">
-                        <h1>🚫 Acesso Restrito</h1>
-                        <p>Este site só pode ser acessado através do domínio oficial.</p>
-                        <p><a href="https://seusite.com" style="color: #667eea;">Visite o site oficial</a></p>
-                    </div>
-                </div>
             `;
         });
         return;
