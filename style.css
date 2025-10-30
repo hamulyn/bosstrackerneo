@@ -282,22 +282,16 @@ animation: pulse 1s infinite;
 50% { opacity: 0.8; }
 }
 
-/* Yeti Notification Controls - UPDATED */
+/* Yeti Notification Controls - SIMPLIFIED */
 .yeti-notification-controls {
 display: flex;
 flex-direction: column;
-gap: 12px;
+gap: 10px;
 margin-top: 15px;
 padding: 15px;
 background: var(--card-bg);
 border-radius: 10px;
 border: 2px solid var(--secondary-color);
-}
-
-.yeti-sound-controls {
-display: flex;
-gap: 10px;
-justify-content: center;
 }
 
 .btn-yeti-notification, .btn-yeti-test {
@@ -374,55 +368,28 @@ color: var(--text-black-color);
 border-color: transparent;
 }
 
-/* Gold & XP Filter Dropdown */
-.btn-custom-dropdown {
-background: var(--secondary-color);
-color: var(--text-light);
-border: 2px solid var(--secondary-color);
-padding: 8px 16px;
-border-radius: 8px;
-cursor: pointer;
-transition: all 0.3s ease;
+.yeti-notification-controls > div:first-child {
 display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.btn-custom-dropdown:hover {
-background: var(--bg-color3);
-border-color: var(--accent-color);
-}
-
-/* Ancient Lunar Sound Controls */
-.monarch-sound-controls {
-display: flex;
-gap: 8px;
-}
-
-.btn-notification-toggle, .btn-test-sound {
-background: transparent;
-border: 2px solid var(--secondary-color);
-color: var(--text-muted);
-width: 36px;
-height: 36px;
-border-radius: 50%;
-display: flex;
-align-items: center;
+gap: 10px;
 justify-content: center;
-cursor: pointer;
-transition: all 0.3s ease;
 }
 
-.btn-notification-toggle.active, .btn-test-sound:hover {
-border-color: var(--accent-color);
-background: var(--accent-color);
-color: var(--text-black-color);
-box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+.yeti-notification-controls > div:first-child .btn-yeti-notification,
+.yeti-notification-controls > div:first-child .btn-yeti-test {
+margin: 0;
 }
 
-.btn-test-sound:active {
-background: var(--accent-color);
-color: var(--text-black-color);
+/* Update structure */
+.yeti-notification-controls {
+display: grid;
+grid-template-columns: auto 1fr;
+gap: 15px;
+align-items: center;
+}
+
+.yeti-notification-controls > div:first-child {
+display: flex;
+gap: 10px;
 }
 
 @media (max-width: 480px) {
@@ -1006,6 +973,11 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 15px;
+}
+
+.monarch-sound-controls {
+display: flex;
+gap: 8px;
 }
 
 .btn-monarch-kill {
