@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html dir='ltr' lang='en'>
+<head>
+<meta content='width=device-width, initial-scale=1' name='viewport'/>
+<title>NEO QoL</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<link href='https://cdn.jsdelivr.net/npm/lucide-static@0.367.0/icons/swords.svg' rel='icon' type='image/svg+xml'/>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'/>
+<link rel="stylesheet" href="style.css">
   <script>
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     return false;
 });
-
 document.addEventListener('selectstart', function(e) {
     e.preventDefault();
     return false;
 });
-
 document.addEventListener('keydown', function(e) {
     if (e.key === 'F12' || 
         (e.ctrlKey && e.shiftKey && e.key === 'I') || 
@@ -20,7 +25,6 @@ document.addEventListener('keydown', function(e) {
         return false;
     }
 });
-
 document.addEventListener('dragstart', function(e) {
     if (e.target.tagName === 'IMG') {
         e.preventDefault();
@@ -28,7 +32,6 @@ document.addEventListener('dragstart', function(e) {
     }
 });
 </script>
-
 <style>
 body {
     -webkit-user-select: none;
@@ -36,7 +39,6 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-
 img {
     -webkit-user-drag: none;
     -moz-user-drag: none;
@@ -44,16 +46,8 @@ img {
     user-drag: none;
 }
 </style>
-<head>
-<meta content='width=device-width, initial-scale=1' name='viewport'/>
-<title>NEO QoL</title>
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-<link href='https://cdn.jsdelivr.net/npm/lucide-static@0.367.0/icons/swords.svg' rel='icon' type='image/svg+xml'/>
-<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'/>
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Sidebar -->
 <aside class='sidebar d-flex flex-column flex-shrink-0 position-fixed' id='sidebar'>
 <button class='toggle-btn' id='sidebarToggleBtn'>
 <i data-lucide='chevrons-left-right-ellipsis'></i>
