@@ -1,5 +1,5 @@
 /* =============================================
-BLADE & SOUL TOOLS - NEO QOL
+BLADE & SOUL TOOLS - NEO QOL - FIXED
 ============================================= */
 
 /*========= Reset CSS =========*/
@@ -196,7 +196,7 @@ from { opacity: 0; transform: translateY(20px); }
 to { opacity: 1; transform: translateY(0); }
 }
 
-/* Region Selector - FIXED FOR COLLAPSED */
+/* Region Selector */
 .region-selector {
 display: flex;
 gap: 8px;
@@ -269,6 +269,7 @@ text-align: center;
 margin: 10px 0;
 padding: 10px;
 border-radius: 8px;
+font-size: 1.8rem;
 }
 
 .countdown-active {
@@ -277,24 +278,84 @@ color: var(--text-black-color);
 animation: pulse 1s infinite;
 }
 
+.countdown-spawn-phase {
+background: var(--text-color2);
+color: #fff;
+animation: pulse 1s infinite;
+font-size: 2rem;
+}
+
+.countdown-inactive {
+background: var(--secondary-color);
+color: var(--text-muted);
+}
+
+.spawn-label {
+text-align: center;
+color: var(--text-color2);
+font-weight: 600;
+margin: 10px 0;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+
 @keyframes pulse {
 0%, 100% { opacity: 1; }
 50% { opacity: 0.8; }
 }
 
-/* Yeti Notification Controls - SIMPLIFIED */
-.yeti-notification-controls {
+/* Event Info Styling */
+.event-info {
+text-align: center;
+}
+
+.event-zone {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--text-light);
+margin-bottom: 5px;
+}
+
+.event-subzone {
+color: var(--text-muted);
+font-size: 0.9rem;
 display: flex;
-flex-direction: column;
-gap: 10px;
+align-items: center;
+justify-content: center;
+gap: 5px;
+margin-bottom: 5px;
+}
+
+.event-time {
+color: var(--accent-color);
+font-weight: 600;
+font-size: 1rem;
+}
+
+/* Boss Notification Controls - FIXED: Proper spacing */
+.boss-notification-controls {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 15px;
 margin-top: 15px;
 padding: 15px;
 background: var(--card-bg);
 border-radius: 10px;
 border: 2px solid var(--secondary-color);
+flex-wrap: wrap;
 }
 
-.btn-yeti-notification, .btn-yeti-test {
+.boss-sound-buttons {
+display: flex;
+gap: 8px;
+align-items: center;
+}
+
+.btn-boss-notification, 
+.btn-boss-test {
 background: transparent;
 border: 2px solid var(--secondary-color);
 color: var(--text-muted);
@@ -306,46 +367,46 @@ align-items: center;
 justify-content: center;
 cursor: pointer;
 transition: all 0.3s ease;
+padding: 0;
 }
 
-.btn-yeti-notification.active {
+.btn-boss-notification.active {
 border-color: var(--accent-color);
 background: var(--accent-color);
 color: var(--text-black-color);
 box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
 }
 
-.btn-yeti-notification:hover, .btn-yeti-test:hover {
+.btn-boss-notification:hover, 
+.btn-boss-test:hover {
 border-color: var(--accent-color);
 transform: scale(1.05);
 }
 
-.btn-yeti-test:active {
+.btn-boss-test:active {
 background: var(--accent-color);
 color: var(--text-black-color);
 }
 
-.yeti-time-selector {
+.boss-time-selector {
 display: flex;
 align-items: center;
 gap: 10px;
 }
 
-.yeti-time-selector label {
+.boss-time-selector label {
 font-weight: 600;
 font-size: 0.9rem;
 color: var(--text-light);
 white-space: nowrap;
 }
 
-.yeti-time-buttons {
+.boss-time-buttons {
 display: flex;
 gap: 8px;
-flex: 1;
 }
 
-.btn-yeti-time {
-flex: 1;
+.btn-boss-time {
 padding: 8px 12px;
 border: 2px solid var(--secondary-color);
 background: var(--bg-color);
@@ -355,55 +416,38 @@ cursor: pointer;
 font-weight: 600;
 font-size: 0.85rem;
 transition: all 0.3s ease;
+min-width: 60px;
+text-align: center;
 }
 
-.btn-yeti-time:hover {
+.btn-boss-time:hover {
 background: var(--secondary-color);
 transform: translateY(-2px);
 }
 
-.btn-yeti-time.active {
+.btn-boss-time.active {
 background: var(--vs-theme-color);
 color: var(--text-black-color);
 border-color: transparent;
 }
 
-.yeti-notification-controls > div:first-child {
-display: flex;
-gap: 10px;
-justify-content: center;
-}
-
-.yeti-notification-controls > div:first-child .btn-yeti-notification,
-.yeti-notification-controls > div:first-child .btn-yeti-test {
-margin: 0;
-}
-
-/* Update structure */
-.yeti-notification-controls {
-display: grid;
-grid-template-columns: auto 1fr;
-gap: 15px;
-align-items: center;
-}
-
-.yeti-notification-controls > div:first-child {
-display: flex;
-gap: 10px;
-}
-
 @media (max-width: 480px) {
-.yeti-notification-controls {
-grid-template-columns: 1fr;
+.boss-notification-controls {
+flex-direction: column;
 }
 
-.yeti-time-selector {
+.boss-time-selector {
 flex-direction: column;
+width: 100%;
 align-items: flex-start;
 }
 
-.yeti-time-buttons {
+.boss-time-buttons {
 width: 100%;
+}
+
+.btn-boss-time {
+flex: 1;
 }
 }
 
@@ -626,7 +670,37 @@ margin-bottom: 10px;
 border-bottom: 2px solid var(--secondary-color);
 }
 
-/* Gold & XP Tracker - RESTORED ORIGINAL */
+/* Gold & XP Tracker - FIXED: Standardized filter icon */
+.filter-events-container {
+position: relative;
+}
+
+.btn-custom-dropdown {
+background: transparent;
+color: var(--text-light);
+border: 2px solid var(--secondary-color);
+padding: 8px 16px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+gap: 8px;
+font-weight: 600;
+font-size: 0.9rem;
+}
+
+.btn-custom-dropdown:hover {
+background: var(--secondary-color);
+border-color: var(--accent-color);
+}
+
+.btn-custom-dropdown svg,
+.btn-custom-dropdown i {
+width: 18px;
+height: 18px;
+}
+
 .gxp-tracker-selector {
 border-radius: 10px;
 padding: 1.5rem;
@@ -815,28 +889,6 @@ background: rgba(102, 126, 234, 0.3);
 transform: scale(1.05);
 }
 
-.gxp-subtotal {
-padding: 0.5rem 0.75rem;
-}
-
-.gxp-subtotal-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-font-size: 0.75rem;
-font-weight: 500;
-}
-
-.gxp-subtotal-label {
-font-size: 1rem;
-color: var(--text-light);
-}
-
-.gxp-subtotal-gold {
-color: var(--accent-color);
-font-weight: 600;
-}
-
 .gxp-summary-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -874,7 +926,7 @@ background: var(--accent-color);
 border-radius: 10px;
 }
 
-/* Supreme Force Calculator - RESTORED */
+/* Supreme Force Calculator */
 .dungeon-select {
 position: relative;
 display: flex;
@@ -947,7 +999,7 @@ color: rgb(74 222 128 / 1);
 color: rgb(248 113 113 / 1);
 }
 
-/* Ancient Lunar Styles */
+/* Ancient Lunar Styles - FIXED: Standardized icons */
 .ancient-lunar-section {
 margin-bottom: 40px;
 }
@@ -980,6 +1032,40 @@ display: flex;
 gap: 8px;
 }
 
+.monarch-sound-controls .btn-notification-toggle,
+.monarch-sound-controls .btn-test-sound {
+background: transparent;
+border: 2px solid var(--secondary-color);
+color: var(--text-muted);
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.3s ease;
+padding: 0;
+}
+
+.monarch-sound-controls .btn-notification-toggle.active {
+border-color: var(--accent-color);
+background: var(--accent-color);
+color: var(--text-black-color);
+box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+.monarch-sound-controls .btn-notification-toggle:hover,
+.monarch-sound-controls .btn-test-sound:hover {
+border-color: var(--accent-color);
+transform: scale(1.05);
+}
+
+.monarch-sound-controls .btn-test-sound:active {
+background: var(--accent-color);
+color: var(--text-black-color);
+}
+
 .btn-monarch-kill {
 background: var(--vs-theme-color);
 color: var(--text-black-color);
@@ -995,26 +1081,6 @@ gap: 8px;
 width: 100%;
 margin: 10px 0;
 transition: all 0.3s ease;
-}
-
-.monarch-timer {
-font-size: 2.5rem;
-font-weight: 800;
-margin: 15px 0;
-color: var(--text-light);
-}
-
-.monarch-timer.window-1 {
-color: var(--accent-color);
-}
-
-.monarch-timer.window-2 {
-color: var(--golden-color);
-}
-
-.monarch-status {
-color: var(--text-muted);
-font-size: 0.9rem;
 }
 
 .monarch-windows {
@@ -1046,6 +1112,12 @@ text-transform: uppercase;
 font-size: 1.5rem;
 font-weight: 700;
 color: var(--text-light);
+}
+
+.monarch-status {
+color: var(--text-muted);
+font-size: 0.9rem;
+margin-top: 10px;
 }
 
 .monarch-confirm-buttons {
@@ -1099,6 +1171,10 @@ padding: 10px;
 margin-top: 10px;
 font-size: 0.85rem;
 color: var(--text-color1);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
 }
 
 .grind-calculator {
